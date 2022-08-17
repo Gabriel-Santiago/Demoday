@@ -23,8 +23,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class Usuario implements UserDetails{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="login_generator")
-	@SequenceGenerator(name="login_generator", sequenceName ="login_seq", allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="user_generator")
+	@SequenceGenerator(name="user_generator", sequenceName ="user_seq", allocationSize=1)
 	private int id;
 	private String nome;
 	@Column(nullable =false, unique =true)
@@ -44,7 +44,6 @@ public class Usuario implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
         return roles;
     }
 	
@@ -133,37 +132,31 @@ public class Usuario implements UserDetails{
 
     @Override
     public String getPassword() {
-        // TODO Auto-generated method stub
         return senha;
     }
  
     @Override
     public String getUsername() {
-        // TODO Auto-generated method stub
         return email;
     }
  
     @Override
     public boolean isAccountNonExpired() {
-        // TODO Auto-generated method stub
         return true;
     }
  
     @Override
     public boolean isAccountNonLocked() {
-        // TODO Auto-generated method stub
         return true;
     }
  
     @Override
     public boolean isCredentialsNonExpired() {
-        // TODO Auto-generated method stub
         return true;
     }
  
     @Override
     public boolean isEnabled() {
-        // TODO Auto-generated method stub
         return true;
     }
     
