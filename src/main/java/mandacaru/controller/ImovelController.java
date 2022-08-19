@@ -36,7 +36,7 @@ public class ImovelController {
     }
     
     @PostMapping(path = "/usuarios/{id}/imoveis")
-    @PreAuthorize("isAuthenticated()")  
+    @PreAuthorize("hasAuthority('ADMIN')")  
     public void save(@PathVariable("id") int usuario_id,@RequestBody Imovel imovel) {
         service.save(usuario_id, imovel);
     }

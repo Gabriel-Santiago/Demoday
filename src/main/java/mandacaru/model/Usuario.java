@@ -36,7 +36,7 @@ public class Usuario implements UserDetails{
 	private String endereco;
 	
 	@ManyToMany
-	@JoinTable(joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roles;
 
 	@OneToMany(mappedBy = "usuario")
