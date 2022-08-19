@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import mandacaru.model.Usuario;
@@ -19,6 +20,7 @@ public class UsuarioService {
 		if(id != 0) {
 			entity.setId(id);
 		}
+		entity.setSenha(new BCryptPasswordEncoder().encode(entity.getSenha()));
 		usuarioRepository.save(entity);
 	}
 

@@ -26,6 +26,7 @@ public class UsuarioController {
     @Autowired
     UsuarioService service;
  
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping
     public ResponseEntity<List<Usuario>> findall() {
         return new ResponseEntity<List<Usuario>>(service.findAll(), HttpStatus.OK);
@@ -47,7 +48,7 @@ public class UsuarioController {
 		}
 	}
  
-    @PostMapping
+    @PostMapping()
     public void save(@RequestBody Usuario usuario) {
         service.save(0, usuario);
     }
