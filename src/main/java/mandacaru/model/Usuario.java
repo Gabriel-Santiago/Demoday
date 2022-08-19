@@ -22,6 +22,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name="usuarios")
 public class Usuario implements UserDetails{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3553165280423613073L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="user_generator")
 	@SequenceGenerator(name="user_generator", sequenceName ="user_seq", allocationSize=1)
@@ -35,16 +39,16 @@ public class Usuario implements UserDetails{
 	private String telefone;
 	private String endereco;
 	
-	@ManyToMany
+	/*@ManyToMany
 	@JoinTable(joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private List<Role> roles;
+	private List<Role> roles;*/
 
 	@OneToMany(mappedBy = "usuario")
 	private List<Imovel> imoveis;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return null;
     }
 	
 	public int getId() {

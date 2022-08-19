@@ -27,7 +27,6 @@ public class UsuarioController {
     UsuarioService service;
  
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")  
     public ResponseEntity<List<Usuario>> findall() {
         return new ResponseEntity<List<Usuario>>(service.findAll(), HttpStatus.OK);
     }
