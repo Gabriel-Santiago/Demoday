@@ -4,7 +4,7 @@
 ### Ultimas Mudanças
 
 ### Metas
-- [ ] Seguraça
+- [X] Seguraça
 - [ ] PDTsing
 - [ ] Front
 - [ ] CRUD Postman
