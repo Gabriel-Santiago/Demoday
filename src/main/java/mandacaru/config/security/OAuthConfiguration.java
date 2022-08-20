@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
+@SuppressWarnings("deprecation")
 @Configuration
 public class OAuthConfiguration {
 
@@ -48,6 +49,7 @@ public class OAuthConfiguration {
 	protected class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
 		@Autowired
+		@Qualifier("authenticationManagerBean")
 		private AuthenticationManager authenticationManager;
 
 		@Autowired
@@ -62,7 +64,7 @@ public class OAuthConfiguration {
 	        tokenEnhancerChain.setTokenEnhancers(List.of(new CustomTokenEnhancer(), accessTokenConverter()));
 			endpoints.
 				accessTokenConverter(accessTokenConverter()).
-				tokenEnhancer(tokenEnhancerChain).
+				tokenEnhancer(null).
 				authenticationManager(this.authenticationManager)
 				.userDetailsService(userDetailsService);
 		}

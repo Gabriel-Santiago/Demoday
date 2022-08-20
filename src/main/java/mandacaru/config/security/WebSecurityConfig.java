@@ -18,37 +18,30 @@ import org.springframework.stereotype.Component;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
+	@Autowired
+	UserDetailsServiceImpl userDetailsServiceImpl;
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.httpBasic()
+		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and().csrf().disable();
+	}
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
 	@Override
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
-	    return super.authenticationManagerBean();
+		return super.authenticationManagerBean();
 	}
-	
-	@Autowired
-    UserDetailsServiceImpl userDetailsServiceImpl;
-	
-	@Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-	
-	@Override
-    protected void configure(HttpSecurity http) throws Exception {
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and().httpBasic()
-		.and()
-		.authorizeHttpRequests()
-		.antMatchers("/api/usuarios/**").permitAll()
-		.anyRequest().authenticated()
-		.and().csrf().disable();
-
-    }
-	
-	@Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
-    }
-	
-	
 }
