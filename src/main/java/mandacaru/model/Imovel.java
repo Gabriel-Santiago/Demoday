@@ -19,7 +19,7 @@ public class Imovel {
 	private int id;
 	private String titulo;
 	private String endereco;
-	private int metros_quadrados_de_terreno;
+	private double metros_quadrados_de_terreno;
 	private int quantidade_de_quartos;
 	private int quantidade_de_banheiros;
 	private int quantidade_de_vagas_de_garagem;
@@ -55,11 +55,11 @@ public class Imovel {
 		this.endereco = endereco;
 	}
 
-	public int getMetros_quadrados_de_terreno() {
+	public double getMetros_quadrados_de_terreno() {
 		return metros_quadrados_de_terreno;
 	}
 
-	public void setMetros_quadrados_de_terreno(int metros_quadrados_de_terreno) {
+	public void setMetros_quadrados_de_terreno(double metros_quadrados_de_terreno) {
 		this.metros_quadrados_de_terreno = metros_quadrados_de_terreno;
 	}
 
@@ -119,7 +119,7 @@ public class Imovel {
 				+ quantidade_de_vagas_de_garagem + ", preco=" + preco + ", status=" + status + "]";
 	}
 
-	public Imovel(int id, String titulo, String endereco, int metros_quadrados_de_terreno, int quantidade_de_quartos,
+	public Imovel(int id, String titulo, String endereco, double metros_quadrados_de_terreno, int quantidade_de_quartos,
 			int quantidade_de_banheiros, int quantidade_de_vagas_de_garagem, double preco, String status,
 			Usuario usuario) {
 		super();
