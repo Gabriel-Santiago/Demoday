@@ -64,7 +64,7 @@ public class OAuthConfiguration {
 	        tokenEnhancerChain.setTokenEnhancers(List.of(new CustomTokenEnhancer(), accessTokenConverter()));
 			endpoints.
 				accessTokenConverter(accessTokenConverter()).
-				tokenEnhancer(null).
+				tokenEnhancer(tokenEnhancerChain).
 				authenticationManager(this.authenticationManager)
 				.userDetailsService(userDetailsService);
 		}
