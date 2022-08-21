@@ -50,7 +50,11 @@ public class ImovelService {
 		return null;
 	}
 
-	public List<Imovel> findAll(int usuario_id) {
+	public List<Imovel> findAllOfUser(int usuario_id) {
 		return imovelRepository.findByUsuarioId(usuario_id);
+	}
+	
+	public List<Imovel> findAll() {
+		return imovelRepository.findAll();
 	}
 }
