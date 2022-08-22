@@ -4,7 +4,7 @@ import org.apache.tomcat.util.json.ParseException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -18,8 +18,7 @@ public class MiscController {
 	
 	// requisão de token da api do pdt sing
 	
-	@GetMapping(path = "/teste")
-    public String teste() throws ParseException{
+    public String pdtToken() throws ParseException{
     	String uri = "https://h-auth.portaldedocumentos.com.br/auth/realms/assinador/protocol/openid-connect/token";
     	
     	HttpHeaders headers = new HttpHeaders();
@@ -37,5 +36,25 @@ public class MiscController {
 		 
         return token;
     }
+    
+    @PostMapping(path = "/teste")
+    public Object pdtProcess() throws ParseException{
+    	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes";
+    	
+    	String jsontext = "{\"title\":\"Valida\u00e7\u00e3o de An\u00fancio\",\"requester\":{\"id\":\"44afea47-2bfa-4380-9dae-e1e2ebe7a64d\"},\"company\":{\"id\":\"036e8bc8-f964-4969-92c4-d255d258d941\"},\"flow\":{\"defineOrderOfInvolves\":true,\"hasExpiration\":true,\"expiration\":\"2022-12-30\"},\"members\":[{\"name\":\"Gabriel Santiago\",\"email\":\"gabrielsrmj@alu.ufc.br\",\"documentType\":\"CPF\",\"documentCode\":\"012.345.678-99\",\"actionType\":{\"id\":\"510b226e-c705-4120-ad9d-4a19633ea3df\"},\"responsibility\":{\"id\":\"50a625b5-213a-4743-ae92-f3732d87f159\"},\"authenticationType\":{\"id\":\"841c8833-8566-4a9a-be5b-b30839ed138d\"},\"order\":1,\"type\":\"SUBSCRIBER\",\"representation\":{\"willActAsPhysicalPerson\":true,\"willActRepresentingAnyCompany\":false}},{\"name\":\"Nicolas Caneiro\",\"email\":\"caneiroassado@gmail.com\",\"documentType\":\"CPF\",\"documentCode\":\"012.345.678-99\",\"actionType\":{\"id\":\"510b226e-c705-4120-ad9d-4a19633ea3df\"},\"responsibility\":{\"id\":\"50a625b5-213a-4743-ae92-f3732d87f159\"},\"authenticationType\":{\"id\":\"841c8833-8566-4a9a-be5b-b30839ed138d\"},\"order\":2,\"type\":\"SUBSCRIBER\",\"representation\":{\"willActAsPhysicalPerson\":true,\"willActRepresentingAnyCompany\":false}}]}";
+    	
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_JSON);
+    	headers.add("Authorization", "Bearer " + pdtToken());
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	HttpEntity<String> httpEntity = new HttpEntity<>(jsontext,headers);
+    	
+    	Object result = restTemplate.postForObject(uri, httpEntity, Object.class);
+		 
+        return result;
+    }
+    
 
 }
