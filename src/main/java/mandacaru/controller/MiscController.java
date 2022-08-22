@@ -1,7 +1,6 @@
 package mandacaru.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
 
 import org.apache.tomcat.util.json.ParseException;
 import org.springframework.http.HttpEntity;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -43,7 +41,7 @@ public class MiscController {
     
     // requisão do id do processo da pdt sing
     
-    @PostMapping(path = "/teste")
+    @PostMapping(path = "/testepro")
     public String pdtProcess() throws ParseException{
     	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes";
     	
@@ -53,7 +51,28 @@ public class MiscController {
     			+ "\"company\":{\"id\":\"036e8bc8-f964-4969-92c4-d255d258d941\"},"
     			+ "\"flow\":{\"defineOrderOfInvolves\":true,\"hasExpiration\":true,\"expiration\":\"2022-12-30\"}"
     			+ ",\"members\":"
-    			+ "[{\"name\":\"Gabriel Santiago\",\"email\":\"gabrielsrmj@alu.ufc.br\",\"documentType\":\"CPF\",\"documentCode\":\"012.345.678-99\",\"actionType\":{\"id\":\"510b226e-c705-4120-ad9d-4a19633ea3df\"},\"responsibility\":{\"id\":\"50a625b5-213a-4743-ae92-f3732d87f159\"},\"authenticationType\":{\"id\":\"841c8833-8566-4a9a-be5b-b30839ed138d\"},\"order\":1,\"type\":\"SUBSCRIBER\",\"representation\":{\"willActAsPhysicalPerson\":true,\"willActRepresentingAnyCompany\":false}},{\"name\":\"Nicolas Caneiro\",\"email\":\"caneiroassado@gmail.com\",\"documentType\":\"CPF\",\"documentCode\":\"012.345.678-99\",\"actionType\":{\"id\":\"510b226e-c705-4120-ad9d-4a19633ea3df\"},\"responsibility\":{\"id\":\"50a625b5-213a-4743-ae92-f3732d87f159\"},\"authenticationType\":{\"id\":\"841c8833-8566-4a9a-be5b-b30839ed138d\"},\"order\":2,\"type\":\"SUBSCRIBER\",\"representation\":{\"willActAsPhysicalPerson\":true,\"willActRepresentingAnyCompany\":false}}]}";
+    			// primeiro membro
+    			+ "[{\"name\":\"Gabriel Santiago\","
+    			+ "\"email\":\"gabrielsrmj@alu.ufc.br\","
+    			+ "\"documentType\":\"CPF\","
+    			+ "\"documentCode\":\"012.345.678-99\","
+    			+ "\"actionType\":{\"id\":\"510b226e-c705-4120-ad9d-4a19633ea3df\"},"
+    			+ "\"responsibility\":{\"id\":\"50a625b5-213a-4743-ae92-f3732d87f159\"},"
+    			+ "\"authenticationType\":{\"id\":\"841c8833-8566-4a9a-be5b-b30839ed138d\"},"
+    			+ "\"order\":1,"
+    			+ "\"type\":\"SUBSCRIBER\","
+    			+ "\"representation\":{\"willActAsPhysicalPerson\":true,\"willActRepresentingAnyCompany\":false}},"
+    			// segundo membro
+    			+ "{\"name\":\"Nicolas Caneiro\","
+    			+ "\"email\":\"caneiroassado@gmail.com\","
+    			+ "\"documentType\":\"CPF\","
+    			+ "\"documentCode\":\"012.345.678-99\","
+    			+ "\"actionType\":{\"id\":\"510b226e-c705-4120-ad9d-4a19633ea3df\"},"
+    			+ "\"responsibility\":{\"id\":\"50a625b5-213a-4743-ae92-f3732d87f159\"},"
+    			+ "\"authenticationType\":{\"id\":\"841c8833-8566-4a9a-be5b-b30839ed138d\"},"
+    			+ "\"order\":2,"
+    			+ "\"type\":\"SUBSCRIBER\","
+    			+ "\"representation\":{\"willActAsPhysicalPerson\":true,\"willActRepresentingAnyCompany\":false}}]}";
     	
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
@@ -74,8 +93,10 @@ public class MiscController {
     
     // requisão do id do documento da pdt sing
     
-    public String pdtAddDocument() throws ParseException{
-    	String url = "https://esign-api-pprd.portaldedocumentos.com.br/processes/:idProcess/documents";
+    @PostMapping(path = "/testedoc")
+    public String pdtDocument() throws ParseException{
+    	
+    	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + pdtProcess() +"/documents";
     	
     	String jsontext = 
     			"{\"extension\":\"PDF\","
@@ -87,14 +108,6 @@ public class MiscController {
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
     	headers.add("Authorization", "Bearer " + pdtToken());
-    	
-    	String uri = UriComponentsBuilder.fromHttpUrl(url)
-    	        .queryParam("idProcess", "{idProcess}")
-    	        .encode()
-    	        .toUriString();
-
-    	Map<String, String> params = new HashMap<>();
-    	params.put("idProcess", pdtProcess());
     	
     	RestTemplate restTemplate = new RestTemplate();
     	
@@ -109,5 +122,24 @@ public class MiscController {
         return documentId;
     }
     
-
+    // upload de documento do processo
+    
+    @PostMapping(path = "/testeup")
+    public void pdtUpDocument() throws ParseException{
+    	
+    	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + pdtProcess() + "/documents/" + pdtDocument() +"/upload";
+    	
+    	File pdf = new File("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf");
+    	
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_PDF);
+    	headers.add("Authorization", "Bearer " + pdtToken());
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	HttpEntity<File> httpEntity = new HttpEntity<>(pdf,headers);
+    	
+    	restTemplate.postForObject(uri, httpEntity, String.class);
+    }
+    
 }
