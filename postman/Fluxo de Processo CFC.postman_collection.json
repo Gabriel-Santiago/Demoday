@@ -1,0 +1,605 @@
+{
+	"info": {
+		"_postman_id": "1022e7fa-137d-4148-8495-9888883b9732",
+		"name": "Fluxo de Processo CFC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17254530"
+	},
+	"item": [
+		{
+			"name": "1. Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json(),\r",
+							"    access_token = response.access_token,\r",
+							"    refresh_token = response.refresh_token;\r",
+							"pm.collectionVariables.set(\"TOKEN\", access_token);\r",
+							"pm.collectionVariables.set(\"REFRESH_TOKEN\", refresh_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "integracao.ufc@pd.tec.br",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "3gpB9d*n",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "assinador-app",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://h-auth.portaldedocumentos.com.br/auth/realms/assinador/protocol/openid-connect/token",
+					"protocol": "https",
+					"host": [
+						"h-auth",
+						"portaldedocumentos",
+						"com",
+						"br"
+					],
+					"path": [
+						"auth",
+						"realms",
+						"assinador",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				},
+				"description": "Autenticação OAuth 2"
+			},
+			"response": []
+		},
+		{
+			"name": "2. Create Company",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-tenant",
+						"value": "{{tenant}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"corporateName\": \"Sandy & Junior S/A\",\r\n    \"name\": \"Sandy & Junior\",\r\n    \"nationality\": \"NATIONAL\",\r\n    \"taxNumber\": \"27.306.659/0001-27\",\r\n    \"businessUnities\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/companies",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"companies"
+					]
+				},
+				"description": "Cria uma nova empresa"
+			},
+			"response": []
+		},
+		{
+			"name": "2. Company",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-tenant",
+						"value": "{{tenant}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/companies?query=name starts \"portal\"",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"companies"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "name starts \"portal\""
+						}
+					]
+				},
+				"description": "Recupera uma empresa a partir do seu cnpj."
+			},
+			"response": []
+		},
+		{
+			"name": "2. User",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-tenant",
+						"value": "{{tenant}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/users?query=name starts \"caique jhones\"",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "userDocument(code = \"954.798.910-30\")",
+							"disabled": true
+						},
+						{
+							"key": "query",
+							"value": "name starts \"caique jhones\""
+						}
+					]
+				},
+				"description": "Recupera um usuário a partir do CPF"
+			},
+			"response": []
+		},
+		{
+			"name": "2. ActionType",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-tenant",
+						"value": "{{tenant}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/actiontypes",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"actiontypes"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "description = \"Assinar com aceite\"",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Recupera o tipo de ação necessária pelo seu nome."
+			},
+			"response": []
+		},
+		{
+			"name": "2. AuthenticationType",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-tenant",
+						"value": "{{tenant}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/authenticationtypes?query=description = \"Soft Login\"",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"authenticationtypes"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "description = \"Soft Login\""
+						}
+					]
+				},
+				"description": "Recupera o tipo de autenticação pela sua descrição."
+			},
+			"response": []
+		},
+		{
+			"name": "2. Responsibility",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-tenant",
+						"value": "{{tenant}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/responsibilities",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"responsibilities"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "name = \"Testemunha\"",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Recupera o papel a partir da sua descrição."
+			},
+			"response": []
+		},
+		{
+			"name": "3. Process",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-tenant",
+						"value": "{{tenant}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Teste apresentação\",\r\n    \"requester\": {\r\n        \"id\": \"72ac4e8a-59da-08d4-ecc8-f78df351d2d6\"\r\n    },\r\n    \"company\": {\r\n        \"id\": \"bfcc11de-7039-4c18-86e6-7b978c675674\"\r\n    },\r\n    \"flow\": {\r\n        \"defineOrderOfInvolves\": true,\r\n        \"hasExpiration\": true,\r\n        \"expiration\": \"2022-12-30\"\r\n    },\r\n    \"members\": [\r\n    {\r\n        \"name\": \"Erickson do Nascimento\",\r\n        \"email\": \"erickson.nascimento@pd.tec.br\",\r\n        \"documentType\": \"CPF\",\r\n        \"documentCode\": \"427.332.620-50\",\r\n        \"actionType\": {\r\n            \"id\": \"510b226e-c705-4120-ad9d-4a19633ea3df\"\r\n        },\r\n        \"responsibility\": {\r\n            \"id\": \"473d1dba-30ce-4e89-a340-7dff52c3f114\"\r\n        },\r\n        \"authenticationType\": {\r\n            \"id\": \"841c8833-8566-4a9a-be5b-b30839ed138d\"\r\n        },\r\n        \"order\": 1,\r\n        \"type\": \"SUBSCRIBER\",\r\n        \"representation\": {\r\n            \"willActAsPhysicalPerson\": true,\r\n            \"willActRepresentingAnyCompany\": false,\r\n            \"companies\": [{\r\n                \"id\": \"bfcc11de-7039-4c18-86e6-7b978c675674\"\r\n            }]\r\n        }\r\n    }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/processes",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"processes"
+					]
+				},
+				"description": "Cria um novo processo com status de DRAFT. Os arquivos do processo podem ser informados por aqui no formato de base 64 ou utilizando o endpoint específico de upload de documentos.\n\nPara a url do callback pode ser informados dois placeholders:\n\n{id} - receberá o id do processo\n\n{action} - ação que foi realizada (SIGNED, REJECTED, PENDING, SOLVED_PENDING, DONE)."
+			},
+			"response": []
+		},
+		{
+			"name": "3. Add document",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-tenant",
+						"value": "{{tenant}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"extension\": \"PDF\",\r\n    \"isPendency\": false,\r\n    \"name\": \"meu-arquivo\",\r\n    \"order\": 1,\r\n    \"type\": \"SIGN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/processes/:idProcess/documents",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"processes",
+						":idProcess",
+						"documents"
+					],
+					"variable": [
+						{
+							"key": "idProcess",
+							"value": "fbb0c06c-9381-4f85-89ff-cc1a9bfee5fb"
+						}
+					]
+				},
+				"description": "Cria um documento no processo. É necessário criar o documento antes de fazer o upload do arquivo."
+			},
+			"response": []
+		},
+		{
+			"name": "3. Upload document",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-tenant",
+						"value": "{{tenant}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/caique.oliveira/Documents/Documento de teste.pdf"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/processes/:idProcess/documents/:documentId/upload",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"processes",
+						":idProcess",
+						"documents",
+						":documentId",
+						"upload"
+					],
+					"variable": [
+						{
+							"key": "idProcess",
+							"value": "fbb0c06c-9381-4f85-89ff-cc1a9bfee5fb"
+						},
+						{
+							"key": "documentId",
+							"value": "803c9bcf-aa0c-48ae-8ba2-5ea798c50327"
+						}
+					]
+				},
+				"description": "Após criar o documento é necessário fazer o upload do arquivo. Após isso o documento ficará com o status de PROCESSING, indicando que o Assinador está processando o arquivo enviado. É necessário consultar o documento para verificar se o status do documento está em DONE."
+			},
+			"response": []
+		},
+		{
+			"name": "3. Check if document is DONE",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-tenant",
+						"value": "{{tenant}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/processes/:idProcess/documents/:documentId",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"processes",
+						":idProcess",
+						"documents",
+						":documentId"
+					],
+					"variable": [
+						{
+							"key": "idProcess",
+							"value": "fbb0c06c-9381-4f85-89ff-cc1a9bfee5fb"
+						},
+						{
+							"key": "documentId",
+							"value": "803c9bcf-aa0c-48ae-8ba2-5ea798c50327"
+						}
+					]
+				},
+				"description": "Após o upload do arquivo, antes de iniciar o processo, todos os documentos precisam estar com o status de DONE, indicando que todos foram processados com sucesso e estão prontos para serem iniciados."
+			},
+			"response": []
+		},
+		{
+			"name": "4. Process Running",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "x-tenant",
+						"value": "{{tenant}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\": \"RUNNING\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/processes/:idProcess",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"processes",
+						":idProcess"
+					],
+					"variable": [
+						{
+							"key": "idProcess",
+							"value": "fbb0c06c-9381-4f85-89ff-cc1a9bfee5fb"
+						}
+					]
+				},
+				"description": "Executa o processo, colocando os documentos para serem assinados."
+			},
+			"response": []
+		},
+		{
+			"name": "5. Check Process",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-tenant",
+						"value": "{{tenant}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/processes/:idProcess/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"processes",
+						":idProcess",
+						""
+					],
+					"variable": [
+						{
+							"key": "idProcess",
+							"value": "fbb0c06c-9381-4f85-89ff-cc1a9bfee5fb"
+						}
+					]
+				},
+				"description": "Após o upload do arquivo, antes de iniciar o processo, todos os documentos precisam estar com o status de DONE, indicando que todos foram processados com sucesso e estão prontos para serem iniciados."
+			},
+			"response": []
+		},
+		{
+			"name": "6. SoftLink",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-tenant",
+						"value": "{{tenant}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/processes/:idProcess/members/:memberId/soft-link",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"processes",
+						":idProcess",
+						"members",
+						":memberId",
+						"soft-link"
+					],
+					"variable": [
+						{
+							"key": "idProcess",
+							"value": "acc8f489-763b-41ff-b360-c526f7505aad"
+						},
+						{
+							"key": "memberId",
+							"value": "13433695-fae0-4d84-b69d-b8dff000cb2f"
+						}
+					]
+				},
+				"description": "Recupera o link do soft login para um envolvido no processo."
+			},
+			"response": []
+		},
+		{
+			"name": "User",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://esign-api-pprd.portaldedocumentos.com.br",
+			"type": "string"
+		},
+		{
+			"key": "TOKEN",
+			"value": ""
+		},
+		{
+			"key": "REFRESH_TOKEN",
+			"value": ""
+		},
+		{
+			"key": "tenant",
+			"value": "9e11ce5f-8227-4aa4-be67-489f0edd9d4e",
+			"type": "string"
+		}
+	]
+}
