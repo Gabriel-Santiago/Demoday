@@ -47,17 +47,23 @@ public class UsuarioController {
 			return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
 		}
 	}
+    
+    //
  
     @PostMapping()
     @PreAuthorize("hasAuthority('ADMIN')")
     public void save(@RequestBody Usuario usuario) {
         service.save(0, usuario);
     }
+    
+    //
  
     @PutMapping(path = "/{id}")
     public void update(@PathVariable("id") int id, @RequestBody Usuario usuario) {
         service.save(id, usuario);
     }
+    
+    //
  
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable("id") int id) {

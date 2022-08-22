@@ -3,7 +3,10 @@ package mandacaru.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,15 +42,6 @@ public class ImovelController {
     @GetMapping(path = "/imoveis/{id}")
     public ResponseEntity<Imovel> find(@PathVariable("id") int id) {
         return new ResponseEntity<Imovel>(service.find(id), HttpStatus.OK);
-    }
-    
-    @GetMapping(path = "/teste")
-    public String teste() {
-    	RestTemplate restTemplate = new RestTemplate();
-    	String url = "https://reqres.in/api/users?page=2";
-    	String result = restTemplate.getForObject(url, String.class);
-    	
-        return result;
     }
     
     //
