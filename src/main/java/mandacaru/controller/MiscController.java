@@ -21,6 +21,7 @@ public class MiscController {
 	// requisão de token da api da pdt sing
 	
     public String pdtToken() throws ParseException{
+    	
     	String uri = "https://h-auth.portaldedocumentos.com.br/auth/realms/assinador/protocol/openid-connect/token";
     	
     	HttpHeaders headers = new HttpHeaders();
