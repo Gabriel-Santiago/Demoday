@@ -34,7 +34,13 @@ public class UsuarioController {
  
     @GetMapping(path = "/{id}")
     public ResponseEntity<Usuario> find(@PathVariable("id") int id) {
-        return new ResponseEntity<Usuario>(service.find(id), HttpStatus.OK);
+    	Usuario usuario = service.find(id);
+		
+		if(usuario != null) {
+			return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);	
+		} else {
+			return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
+		}
     }
     
     @GetMapping(path = "/search")

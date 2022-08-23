@@ -8,5 +8,12 @@
 - [ ] PDTsing
 - [ ] Front
 - [ ] CRUD Postman
-	- [ ] imovel
-	- [ ] usuario
+	- [ ] Imovel
+	- [ ] Usuario
+- [ ] Teste
+	- [ ] Controller
+		- [ ] Imovel
+		- [X] Usuario
+	- [ ] Service
+		- [ ] Imovel
+		- [X] Usuario
