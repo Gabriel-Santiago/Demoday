@@ -1,22 +1,28 @@
-package mandacaru.controller;
+package mandacaru;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.tomcat.util.json.ParseException;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-@RestController
-@RequestMapping(path = "/api") 
-public class MiscController {
+public class Pdt {
 	
 	// requisão de token da api da pdt sing
 	
@@ -42,8 +48,7 @@ public class MiscController {
     
     // requisão do id do processo da pdt sing
     
-    @PostMapping(path = "/testepro")
-    public String pdtProcess() throws ParseException{
+    public String pdtProcess(String token) throws ParseException{
     	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes";
     	
     	String jsontext = 
@@ -53,16 +58,17 @@ public class MiscController {
     			+ "\"flow\":{\"defineOrderOfInvolves\":true,\"hasExpiration\":true,\"expiration\":\"2022-12-30\"}"
     			+ ",\"members\":"
     			// primeiro membro
-    			+ "[{\"name\":\"Gabriel Santiago\","
-    			+ "\"email\":\"gabrielsrmj@alu.ufc.br\","
-    			+ "\"documentType\":\"CPF\","
-    			+ "\"documentCode\":\"012.345.678-99\","
-    			+ "\"actionType\":{\"id\":\"510b226e-c705-4120-ad9d-4a19633ea3df\"},"
-    			+ "\"responsibility\":{\"id\":\"50a625b5-213a-4743-ae92-f3732d87f159\"},"
-    			+ "\"authenticationType\":{\"id\":\"841c8833-8566-4a9a-be5b-b30839ed138d\"},"
-    			+ "\"order\":1,"
-    			+ "\"type\":\"SUBSCRIBER\","
-    			+ "\"representation\":{\"willActAsPhysicalPerson\":true,\"willActRepresentingAnyCompany\":false}},"
+    			+ "["
+//    			+ "{\"name\":\"Gabriel Santiago\","
+//    			+ "\"email\":\"gabrielsrmj@alu.ufc.br\","
+//    			+ "\"documentType\":\"CPF\","
+//    			+ "\"documentCode\":\"012.345.678-99\","
+//    			+ "\"actionType\":{\"id\":\"510b226e-c705-4120-ad9d-4a19633ea3df\"},"
+//    			+ "\"responsibility\":{\"id\":\"50a625b5-213a-4743-ae92-f3732d87f159\"},"
+//    			+ "\"authenticationType\":{\"id\":\"841c8833-8566-4a9a-be5b-b30839ed138d\"},"
+//    			+ "\"order\":1,"
+//    			+ "\"type\":\"SUBSCRIBER\","
+//    			+ "\"representation\":{\"willActAsPhysicalPerson\":true,\"willActRepresentingAnyCompany\":false}},"
     			// segundo membro
     			+ "{\"name\":\"Nicolas Caneiro\","
     			+ "\"email\":\"caneiroassado@gmail.com\","
@@ -71,13 +77,13 @@ public class MiscController {
     			+ "\"actionType\":{\"id\":\"510b226e-c705-4120-ad9d-4a19633ea3df\"},"
     			+ "\"responsibility\":{\"id\":\"50a625b5-213a-4743-ae92-f3732d87f159\"},"
     			+ "\"authenticationType\":{\"id\":\"841c8833-8566-4a9a-be5b-b30839ed138d\"},"
-    			+ "\"order\":2,"
+    			+ "\"order\":1,"
     			+ "\"type\":\"SUBSCRIBER\","
     			+ "\"representation\":{\"willActAsPhysicalPerson\":true,\"willActRepresentingAnyCompany\":false}}]}";
     	
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
-    	headers.add("Authorization", "Bearer " + pdtToken());
+    	headers.add("Authorization", "Bearer " + token);
     	
     	RestTemplate restTemplate = new RestTemplate();
     	
@@ -94,10 +100,9 @@ public class MiscController {
     
     // requisão do id do documento da pdt sing
     
-    @PostMapping(path = "/testedoc")
-    public String pdtDocument() throws ParseException{
+    public String pdtDocument(String token, String processId) throws ParseException{
     	
-    	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + pdtProcess() +"/documents";
+    	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId +"/documents";
     	
     	String jsontext = 
     			"{\"extension\":\"PDF\","
@@ -108,7 +113,7 @@ public class MiscController {
     	
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
-    	headers.add("Authorization", "Bearer " + pdtToken());
+    	headers.add("Authorization", "Bearer " + token);
     	
     	RestTemplate restTemplate = new RestTemplate();
     	
@@ -125,22 +130,56 @@ public class MiscController {
     
     // upload de documento do processo
     
-    @PostMapping(path = "/testeup")
-    public void pdtUpDocument() throws ParseException{
+    public void pdtUpDocument(String token, String processId, String documentId) throws ParseException, IOException{
     	
-    	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + pdtProcess() + "/documents/" + pdtDocument() +"/upload";
+    	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId + "/documents/" + documentId +"/upload";
     	
-    	File pdf = new File("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf");
+    	byte[] pdf = Files.readAllBytes(Paths.get("F://dummy.pdf"));
+    	
+    	MultiValueMap<String, byte[]> map= new LinkedMultiValueMap<String, byte[]>();
+    	map.add("file", pdf);
     	
     	HttpHeaders headers = new HttpHeaders();
-    	headers.setContentType(MediaType.APPLICATION_PDF);
-    	headers.add("Authorization", "Bearer " + pdtToken());
+    	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    	headers.add("Authorization", "Bearer " + token);
     	
     	RestTemplate restTemplate = new RestTemplate();
+
+    	HttpEntity<MultiValueMap<String, byte[]>> httpEntity = new HttpEntity<MultiValueMap<String, byte[]>>(map, headers);
     	
-    	HttpEntity<File> httpEntity = new HttpEntity<>(pdf,headers);
+    	System.out.println("\n\ntoken : " + token + "\nprocess id : " + processId + "\ndocument id : " + documentId +"\n\n");
     	
     	restTemplate.postForObject(uri, httpEntity, String.class);
+    }
+    
+    public String pdtCheck(String token, String processId) throws ParseException{
+    	
+    	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId ;
+    	
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    	headers.add("Authorization", "Bearer " + token);
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+
+    	HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+    	
+    	String result = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, String.class).getBody();
+    	
+    	
+
+    	return result;
+    }
+    
+    public void teste() throws ParseException, IOException {
+    	
+    	String token = pdtToken();
+    	String processId = pdtProcess(token);
+    	String documentId = pdtDocument(token, processId);
+    	
+    	pdtUpDocument(token, processId, documentId);
+    	
+    	
     }
     
 }
