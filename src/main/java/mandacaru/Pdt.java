@@ -5,10 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.apache.tomcat.util.json.ParseException;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -126,24 +128,44 @@ public class Pdt {
     
     public void pdtUpDocument(String token, String processId, String documentId) throws ParseException, IOException{
     	
+    	RestTemplate tp = new RestTemplate(); 
+    	
     	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId + "/documents/" + documentId +"/upload";
     	
-    	byte[] pdf = Files.readAllBytes(Paths.get("F://dummy.pdf"));
+    	byte[] pdf = Files.readAllBytes(Paths.get("D:\\UFC\\UFC 8.0\\Mandacaru.dev\\Demoday\\dummy.pdf"));
     	
     	MultiValueMap<String, byte[]> map= new LinkedMultiValueMap<String, byte[]>();
     	map.add("file", pdf);
     	
     	HttpHeaders headers = new HttpHeaders();
-    	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    	headers.setContentType(MediaType.MULTIPART_FORM_DATA);
     	headers.add("Authorization", "Bearer " + token);
     	
-    	RestTemplate restTemplate = new RestTemplate();
+    	 // This nested HttpEntiy is important to create the correct
+        // Content-Disposition entry with metadata "name" and "filename"
+        MultiValueMap<String, String> fileMap = new LinkedMultiValueMap<>();
+        ContentDisposition contentDisposition = ContentDisposition
+                .builder("form-data")
+                .name("file")
+                .filename("dummy.pdf")
+                .build();
+        fileMap.add(HttpHeaders.CONTENT_DISPOSITION, contentDisposition.toString());
+        HttpEntity<byte[]> fileEntity = new HttpEntity<>(pdf, fileMap);
 
-    	HttpEntity<MultiValueMap<String, byte[]>> httpEntity = new HttpEntity<MultiValueMap<String, byte[]>>(map, headers);
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("file", fileEntity);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity =
+                new HttpEntity<>(body, headers);
+        
+        ResponseEntity<String> response = tp.exchange(
+                uri,
+                HttpMethod.POST,
+                requestEntity,
+                String.class);
+        
+        System.out.println(response);
     	
-    	System.out.println("\n\ntoken : " + token + "\nprocess id : " + processId + "\ndocument id : " + documentId +"\n\n");
-    	
-    	restTemplate.postForObject(uri, httpEntity, String.class);
     }
     
     // bota o processo pra rodar, não testado
@@ -166,10 +188,7 @@ public class Pdt {
     	HttpEntity<String> httpEntity = new HttpEntity<>(jsontext,headers);
     	
     	String result = restTemplate.exchange(uri, HttpMethod.PATCH, httpEntity, String.class).getBody();
-    	
-    	JsonObject jsonObject = new Gson().fromJson(result, JsonObject.class);
-		
-		String check = jsonObject.get("status").getAsString();
+    		
 
     }
     
@@ -202,7 +221,9 @@ public class Pdt {
     	String processId = pdtProcess(token);
     	String documentId = pdtDocument(token, processId);
     	
+    	System.out.println("ProcessID:"+processId+"documentId"+documentId);
     	pdtUpDocument(token, processId, documentId);
+    	
     	
     	
     }
