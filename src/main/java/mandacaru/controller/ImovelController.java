@@ -2,6 +2,7 @@ package mandacaru.controller;
  
 import java.util.List;
 
+import org.apache.tomcat.util.json.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import mandacaru.model.Imovel;
 import mandacaru.service.ImovelService;
- 
+import mandacaru.Pdt; 
+
 @RestController
 @RequestMapping(path = "/api") 
 public class ImovelController {
@@ -51,6 +53,13 @@ public class ImovelController {
     public void save(@PathVariable("id") int usuario_id,@RequestBody Imovel imovel) {
     		
         service.save(usuario_id, imovel);
+    }
+    
+    @PostMapping(path = "/teste")
+    public String teste() throws ParseException {
+    	Pdt t = new Pdt();
+    	
+        return t.pdtCheckProcess(t.pdtToken(), "d2ba1ead-22d3-4752-9633-d2ad63e67e91");
     }
  
     //

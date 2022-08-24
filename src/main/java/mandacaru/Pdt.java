@@ -122,7 +122,7 @@ public class Pdt {
         return documentId;
     }
     
-    // upload de documento do processo
+    // upload de documento do processo não esta funcionando
     
     public void pdtUpDocument(String token, String processId, String documentId) throws ParseException, IOException{
     	
@@ -146,7 +146,36 @@ public class Pdt {
     	restTemplate.postForObject(uri, httpEntity, String.class);
     }
     
-    public String pdtCheck(String token, String processId) throws ParseException{
+    // bota o processo pra rodar, não testado
+    
+    public void patch(String token, String processId) throws ParseException{
+    	
+    	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId +"/documents";
+    	
+    	String jsontext = 
+    			"{"
+    			+ "\"status\": \"RUNNING\""
+    			+ "}";
+    	
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_JSON);
+    	headers.add("Authorization", "Bearer " + token);
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	HttpEntity<String> httpEntity = new HttpEntity<>(jsontext,headers);
+    	
+    	String result = restTemplate.exchange(uri, HttpMethod.PATCH, httpEntity, String.class).getBody();
+    	
+    	JsonObject jsonObject = new Gson().fromJson(result, JsonObject.class);
+		
+		String check = jsonObject.get("status").getAsString();
+
+    }
+    
+    // retorna o status do processo
+    
+    public String pdtCheckProcess(String token, String processId) throws ParseException{
     	
     	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId ;
     	
@@ -160,9 +189,11 @@ public class Pdt {
     	
     	String result = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, String.class).getBody();
     	
+    	JsonObject jsonObject = new Gson().fromJson(result, JsonObject.class);
+		
+		String check = jsonObject.get("status").getAsString();
     	
-
-    	return result;
+    	return check;
     }
     
     public void teste() throws ParseException, IOException {

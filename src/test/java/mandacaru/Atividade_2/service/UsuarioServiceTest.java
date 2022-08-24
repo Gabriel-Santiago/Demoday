@@ -27,7 +27,7 @@ import mandacaru.service.UsuarioService;
 
 public class UsuarioServiceTest {
 
-	// Usuario
+		// Usuario
 		private static final int ID = 1;
 		private static final String NOME = "Fiódor";
 		private static final String EMAIL = "teste@gmail.com";
