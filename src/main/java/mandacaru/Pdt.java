@@ -25,6 +25,8 @@ public class Pdt {
 	
 	HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
 	
+	Gson gson = new Gson();
+	
 	// requisão de token da api da pdt sing
 	
     public String pdtToken() throws ParseException{
@@ -34,13 +36,11 @@ public class Pdt {
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
     	
-    	RestTemplate restTemplate = new RestTemplate();
-    	
     	HttpEntity<String> httpEntity = new HttpEntity<>("username=integracao.ufc@pd.tec.br&password=3gpB9d*n&client_id=assinador-app&client_secret=&grant_type=password&",headers);
     	
     	String result = restTemplate.postForObject(uri, httpEntity, String.class);
 		
-		JsonObject jsonObject = new Gson().fromJson(result, JsonObject.class);
+		JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
 		
 		String token = jsonObject.get("access_token").getAsString();
 		 
@@ -86,13 +86,11 @@ public class Pdt {
     	headers.setContentType(MediaType.APPLICATION_JSON);
     	headers.add("Authorization", "Bearer " + token);
     	
-    	RestTemplate restTemplate = new RestTemplate();
-    	
     	HttpEntity<String> httpEntity = new HttpEntity<>(jsontext,headers);
     	
     	String result = restTemplate.postForObject(uri, httpEntity, String.class);
     	
-    	JsonObject jsonObject = new Gson().fromJson(result, JsonObject.class);
+    	JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
 		
 		String processId = jsonObject.get("id").getAsString();
 		 
@@ -116,13 +114,11 @@ public class Pdt {
     	headers.setContentType(MediaType.APPLICATION_JSON);
     	headers.add("Authorization", "Bearer " + token);
     	
-    	RestTemplate restTemplate = new RestTemplate();
-    	
     	HttpEntity<String> httpEntity = new HttpEntity<>(jsontext,headers);
     	
     	String result = restTemplate.postForObject(uri, httpEntity, String.class);
     	
-    	JsonObject jsonObject = new Gson().fromJson(result, JsonObject.class);
+    	JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
 		
 		String documentId = jsonObject.get("id").getAsString();
 		 
@@ -220,7 +216,7 @@ public class Pdt {
     			httpEntity, 
     			String.class).getBody();
     	
-    	JsonObject jsonObject = new Gson().fromJson(result, JsonObject.class);
+    	JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
 		
 		String check = jsonObject.get("status").getAsString();
     	
@@ -243,7 +239,7 @@ public class Pdt {
     			httpEntity, 
     			String.class).getBody();
     	
-    	JsonObject jsonObject = new Gson().fromJson(result, JsonObject.class);
+    	JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
 		
 		String check = jsonObject.get("status").getAsString();
     	
