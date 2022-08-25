@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,7 +16,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Imovel {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator="sequence",strategy=GenerationType.SEQUENCE) 
+	@SequenceGenerator(name="sequence",sequenceName = "imoveis_id_seq", allocationSize=1)
 	private int id;
 	private String titulo;
 	private String endereco;

@@ -1,5 +1,6 @@
 package mandacaru.controller;
  
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.tomcat.util.json.ParseException;
@@ -50,7 +51,7 @@ public class ImovelController {
     //
     
     @PostMapping(path = "/usuarios/{id}/imoveis")
-    public void save(@PathVariable("id") int usuario_id,@RequestBody Imovel imovel) {
+    public void save(@PathVariable("id") int usuario_id,@RequestBody Imovel imovel) throws ParseException, IOException, InterruptedException {
     		
         service.save(usuario_id, imovel);
     }

@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -19,6 +20,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 public class Pdt {
+	
+	RestTemplate restTemplate = new RestTemplate();
+	
+	HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
 	
 	// requisão de token da api da pdt sing
 	
@@ -128,11 +133,9 @@ public class Pdt {
     
     public void pdtUpDocument(String token, String processId, String documentId) throws ParseException, IOException{
     	
-    	RestTemplate tp = new RestTemplate(); 
-    	
     	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId + "/documents/" + documentId +"/upload";
     	
-    	byte[] pdf = Files.readAllBytes(Paths.get("D:\\UFC\\UFC 8.0\\Mandacaru.dev\\Demoday\\dummy.pdf"));
+    	byte[] pdf = Files.readAllBytes(Paths.get("F:\\dummy.pdf"));
     	
     	MultiValueMap<String, byte[]> map= new LinkedMultiValueMap<String, byte[]>();
     	map.add("file", pdf);
@@ -141,8 +144,6 @@ public class Pdt {
     	headers.setContentType(MediaType.MULTIPART_FORM_DATA);
     	headers.add("Authorization", "Bearer " + token);
     	
-    	 // This nested HttpEntiy is important to create the correct
-        // Content-Disposition entry with metadata "name" and "filename"
         MultiValueMap<String, String> fileMap = new LinkedMultiValueMap<>();
         ContentDisposition contentDisposition = ContentDisposition
                 .builder("form-data")
@@ -158,7 +159,7 @@ public class Pdt {
         HttpEntity<MultiValueMap<String, Object>> requestEntity =
                 new HttpEntity<>(body, headers);
         
-        ResponseEntity<String> response = tp.exchange(
+        ResponseEntity<String> response = restTemplate.exchange(
                 uri,
                 HttpMethod.POST,
                 requestEntity,
@@ -172,6 +173,11 @@ public class Pdt {
     
     public void patch(String token, String processId) throws ParseException{
     	
+    	requestFactory.setConnectTimeout(0);
+    	requestFactory.setReadTimeout(0);
+
+    	restTemplate.setRequestFactory(requestFactory);
+    	
     	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId +"/documents";
     	
     	String jsontext = 
@@ -183,30 +189,36 @@ public class Pdt {
     	headers.setContentType(MediaType.APPLICATION_JSON);
     	headers.add("Authorization", "Bearer " + token);
     	
-    	RestTemplate restTemplate = new RestTemplate();
-    	
     	HttpEntity<String> httpEntity = new HttpEntity<>(jsontext,headers);
     	
-    	String result = restTemplate.exchange(uri, HttpMethod.PATCH, httpEntity, String.class).getBody();
+    	ResponseEntity<String> responseEntity = restTemplate.exchange(
+    			uri, 
+    			HttpMethod.PATCH, 
+    			httpEntity, 
+    			String.class);
+    	
+    	System.out.println(responseEntity);
     		
 
     }
     
     // retorna o status do processo
     
-    public String pdtCheckProcess(String token, String processId) throws ParseException{
+    public String pdtCheckDocument(String token, String processId, String documentId) throws ParseException{
     	
-    	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId ;
+    	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId +"/documents/" + documentId;
     	
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
     	headers.add("Authorization", "Bearer " + token);
-    	
-    	RestTemplate restTemplate = new RestTemplate();
 
     	HttpEntity<String> httpEntity = new HttpEntity<>(headers);
     	
-    	String result = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, String.class).getBody();
+    	String result = restTemplate.exchange(
+    			uri, 
+    			HttpMethod.GET, 
+    			httpEntity, 
+    			String.class).getBody();
     	
     	JsonObject jsonObject = new Gson().fromJson(result, JsonObject.class);
 		
@@ -215,17 +227,27 @@ public class Pdt {
     	return check;
     }
     
-    public void teste() throws ParseException, IOException {
+    public String pdtCheckProcess(String token, String processId) throws ParseException{
     	
-    	String token = pdtToken();
-    	String processId = pdtProcess(token);
-    	String documentId = pdtDocument(token, processId);
+    	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId ;
     	
-    	System.out.println("ProcessID:"+processId+"documentId"+documentId);
-    	pdtUpDocument(token, processId, documentId);
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    	headers.add("Authorization", "Bearer " + token);
+
+    	HttpEntity<String> httpEntity = new HttpEntity<>(headers);
     	
+    	String result = restTemplate.exchange(
+    			uri, 
+    			HttpMethod.GET, 
+    			httpEntity, 
+    			String.class).getBody();
     	
+    	JsonObject jsonObject = new Gson().fromJson(result, JsonObject.class);
+		
+		String check = jsonObject.get("status").getAsString();
     	
+    	return check;
     }
     
 }

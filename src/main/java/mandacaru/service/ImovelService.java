@@ -1,11 +1,14 @@
 package mandacaru.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.tomcat.util.json.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import mandacaru.Pdt;
 import mandacaru.model.Imovel;
 import mandacaru.model.Usuario;
 import mandacaru.repository.ImovelRepository;
@@ -27,9 +30,24 @@ public class ImovelService {
 		imovelRepository.save(imovel);				
 	}
 	
-	public void save(int usuario_id, Imovel entity) {
-		Usuario usuario = usuarioRepository.findById(usuario_id).get();
+	public void save(int usuario_id, Imovel entity) throws ParseException, IOException, InterruptedException {
+		Pdt pdt = new Pdt();
+		String token = pdt.pdtToken();
+    	String processId = pdt.pdtProcess(token);
+    	String documentId = pdt.pdtDocument(token, processId);
+    	Usuario usuario = usuarioRepository.findById(usuario_id).get();
+    	
+    	pdt.pdtUpDocument(token, processId, documentId);
+    	
+    	while(pdt.pdtCheckDocument(token, processId, documentId) != "DONE")
+    	{Thread.sleep(1000);}
+    	
+    	pdt.patch(token, processId);
+    	
 		entity.setUsuario(usuario);
+		entity.setDocumento(documentId);
+		entity.setProcesso(processId);
+		entity.setStatus(pdt.pdtCheckProcess(token, processId));
 		imovelRepository.save(entity);				
 	}
 
