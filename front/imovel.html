@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="en">
+ 
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de imóvel</title>
+    <script src="https://unpkg.com/vue@2.7.7/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+ 
+<body style="background-color: papayawhip;">
+ 
+    <div id="imovel">
+
+        <h1 style="text-align:center; padding-top: 54px; font-size: 54px; color: gray; font-weight: bold;">Cadastro de Imóvel</h1>
+
+        <div style="text-align:center; margin-top:-27px;"> 
+
+            <div style="display: inline-block; margin: 5px;">
+
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px;">Título:</p><input type="text" name="" id="" v-model="titulo" placeholder="Casa, Mansão, Ap..." /><br /><br />
+
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Área do terreno (m²)</p><input type="number" name="" id="" v-model="metros_quadrados_de_terreno" placeholder="96.30"  min="0" step=".01" /><br /><br />
+
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Total de Quartos:</p><input type="number" name="" id="" v-model="quantidade_de_quartos" placeholder="2" min="0" /><br  /><br />
+
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Vagas de Garagem:</p><input type="number" name="" id="" v-model="quantidade_de_vagas_de_garagem" placeholder="1"  min="0" /><br /><br />
+
+                <button style="background-color: darkgray; border-color: darkgray; width: 99px; height: 27px; margin-top: 18px;"><a href="" style="text-decoration:none; color:white;">Voltar</a></button> <br /><br /> <!-- adicionar link-->
+
+            </div>
+
+            <div style="display: inline-block; margin: 5px;">
+
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; ">Endereço:</p><input type="text" name="" id="" v-model="endereco" placeholder="Rua, Av..." /><br /><br /> 
+
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Preço</p><input type="number" name="" id="" v-model="preco" placeholder="120330.99"  min="0" step=".01" /><br /><br />
+
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Total de Banheiros:</p><input type="number" name="" id="" v-model="quantidade_de_banheiros" placeholder="1"  min="0" /><br /><br />
+
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Status:</p><input type="text" name="" id="" v-model="status" placeholder="Pendente" value="Pendente" readonly/><br /><br />
+
+                <button style="background-color: green; border-color: green; width: 99px; height: 27px; margin-top: 18px;" @click="postImovel"><a style="text-decoration:none; color:white;">Salvar</a></button><br /><br />
+
+            </div>
+
+        </div>
+
+    </div>
+ 
+    <script>
+        var imovel = new Vue({
+            el: "#imovel",
+            methods: {
+                postImovel: function () {
+                    const config = {
+                        headers: { Authorization: "Bearer " + localStorage.token }
+                    };
+ 
+                    let obj = {
+                        titulo: this.titulo,
+                        endereco: this.endereco,
+                        metros_quadrados_de_terreno: this.metros_quadrados_de_terreno,
+                        quantidade_de_quartos: this.quantidade_de_quartos,
+                        quantidade_de_vagas_de_garagem: this.quantidade_de_vagas_de_garagem,
+                        preco: this.preco,
+                        quantidade_de_banheiros: this.quantidade_de_banheiros,
+                        status: this.status,
+                    };
+ 
+                    axios.post(this.baseURI, obj, config).then((result) => {
+                        this.imovel = result.data;
+                    });
+                },
+            },
+        });
+    </script>
+
+</body>
+
+</html>

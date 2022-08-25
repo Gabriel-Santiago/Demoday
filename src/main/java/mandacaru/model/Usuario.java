@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="usuarios")
 public class Usuario implements UserDetails{
@@ -136,11 +138,13 @@ public class Usuario implements UserDetails{
 	}
 
     @Override
+    @JsonIgnore
     public String getPassword() {
         return senha;
     }
  
     @Override
+    @JsonIgnore
     public String getUsername() {
         return email;
     }

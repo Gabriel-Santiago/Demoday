@@ -25,6 +25,9 @@ public class Imovel {
 	private int quantidade_de_vagas_de_garagem;
 	private double preco;
 	private String status;
+	private String documento;
+	private String processo;
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "dono")
@@ -110,18 +113,35 @@ public class Imovel {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	
+	public String getProcesso() {
+		return processo;
+	}
 
+	public void setProcesso(String processo) {
+		this.processo = processo;
+	}
+
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+	
 	@Override
 	public String toString() {
 		return "Imovel [id=" + id + ", titulo=" + titulo + ", endereco=" + endereco + ", metros_quadrados_de_terreno="
 				+ metros_quadrados_de_terreno + ", quantidade_de_quartos=" + quantidade_de_quartos
 				+ ", quantidade_de_banheiros=" + quantidade_de_banheiros + ", quantidade_de_vagas_de_garagem="
-				+ quantidade_de_vagas_de_garagem + ", preco=" + preco + ", status=" + status + "]";
+				+ quantidade_de_vagas_de_garagem + ", preco=" + preco + ", status=" + status + ", documento="
+				+ documento + ", processo=" + processo + ", usuario=" + usuario + "]";
 	}
-
+	
 	public Imovel(int id, String titulo, String endereco, double metros_quadrados_de_terreno, int quantidade_de_quartos,
 			int quantidade_de_banheiros, int quantidade_de_vagas_de_garagem, double preco, String status,
-			Usuario usuario) {
+			String documento, String processo, Usuario usuario) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -132,6 +152,8 @@ public class Imovel {
 		this.quantidade_de_vagas_de_garagem = quantidade_de_vagas_de_garagem;
 		this.preco = preco;
 		this.status = status;
+		this.documento = documento;
+		this.processo = processo;
 		this.usuario = usuario;
 	}
 

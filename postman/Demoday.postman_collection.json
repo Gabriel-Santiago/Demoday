@@ -29,7 +29,7 @@
 					"response": []
 				},
 				{
-					"name": "Get user",
+					"name": "Get user by id",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -259,7 +259,7 @@
 					"response": []
 				},
 				{
-					"name": "Get a property",
+					"name": "Get property by id",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -274,36 +274,6 @@
 								"api",
 								"imoveis",
 								"{{id}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get a property Copy",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsibWFuZGFjYXJ1Il0sInVzZXJfaWQiOjEwOTc3MjU5MzcsInVzZXJfbmFtZSI6ImFkbWluIiwic2NvcGUiOlsiYXBwbGljYXRpb24iXSwiZXhwIjoxNjYxMTcxMDM2LCJhdXRob3JpdGllcyI6WyJVU0VSIiwiQURNSU4iXSwianRpIjoiRHR3ODhZS1lnMmlfZkRGTFJ2Uk1PSHdRYzdrIiwiY2xpZW50X2lkIjoibWFuZGFjYXJ1In0.sSkExPxR51pCccFVfgMDmVp4ZdQ9rsShwtcBvU--MHM",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/teste",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"teste"
 							]
 						}
 					},
@@ -489,6 +459,31 @@
 							"path": [
 								"oauth",
 								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Misc",
+			"item": [
+				{
+					"name": "teste",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/teste",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"teste"
 							]
 						}
 					},

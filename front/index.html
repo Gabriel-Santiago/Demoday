@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cliente</title>
+    <script src="https://unpkg.com/vue@2.7.7/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body style="background-color: papayawhip;">
+
+    <div id="app">
+
+        <h1 style="text-align:center; padding-top: 54px; font-size: 54px; color: gray; font-weight: bold;">Login</h1>
+
+        <div style="text-align:center;">
+
+            <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px;">Email:</p><input type="text" name="" id="" v-model="email" placeholder="algumacoisa@hotmail.com" style="width: 198px" /><br /><br />
+
+            <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px;">Senha:</p><input type="password" name="" id="" v-model="password" placeholder="1234" style="width: 198px" /><br /><br />
+
+            <button @click="login" style="background-color: skyblue; border-color: skyblue; width: 99px; height: 27px;"><a style="text-decoration:none; color:white;">Logar</a></button>
+
+            <button style="background-color: green; border-color: green; width: 99px; height: 27px;"><a href="usuario.html" style="text-decoration:none; color:white;">Cadastrar-se</a></button> <br /><br />
+
+        </div>
+        
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                email: "",
+                password: "",
+                token: "",
+                oauth: "http://localhost:8080/oauth/token"
+            },
+            methods: {
+                login: function () {
+                    var formData = new FormData();
+                    formData.append('username', this.email);
+                    formData.append('password', this.password);
+                    formData.append('grant_type', "password");
+ 
+                    axios.post(this.oauth, formData, { auth: { username: 'mandacaru', password: 'senha123' } }).then((result) => {
+
+                        this.token = result.data.access_token;
+                        localStorage.token = this.token;
+                        if (result.status == 200) {
+                            location.replace("bemvindo.html")
+                        }
+                    });
+                    
+                },
+            },
+        });
+    </script> 
+
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="en">
+ 
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de usuário</title>
+    <script src="https://unpkg.com/vue@2.7.7/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+ 
+<body style="background-color: papayawhip;">
+ 
+    <div id="usuario">
+
+        <h1 style="text-align:center; padding-top: 54px; font-size: 54px; color: gray; font-weight: bold;">Cadastro</h1>
+
+        <div style="text-align:center; margin-top:-27px;"> 
+
+            <div style="display: inline-block; margin: 5px;">
+
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px;">Nome:</p><input type="text" name="" id="" v-model="nome" placeholder="Fiódor Austen" /><br /><br />
+
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Endereço:</p><input type="text" name="" id="" v-model="endereco" placeholder="Rua, Av..." /><br /><br />      
+
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Email:</p><input type="text" name="" id="" v-model="email" placeholder="algumacoisa@hotmail.com" /><br /><br />
+
+                <button style="background-color: darkgray; border-color: darkgray; width: 99px; height: 27px; margin-top: 18px;"><a href="index.html" style="text-decoration:none; color:white;">Voltar</a></button> <br /><br />
+
+            </div>
+
+            <div style="display: inline-block; margin: 5px;">
+
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px;">CPF:</p><input type="text" name="" id="" v-model="cpf" placeholder="xxx.xxx.xxx-xx"/><br  /><br />
+
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Telefone:</p><input type="text" name="" id="" v-model="telefone" placeholder="(99) 9 9999-9999" /><br /><br />
+
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Senha:</p><input type="password" name="" id="" v-model="senha" placeholder="1234" /><br /><br />
+
+                <button style="background-color: green; border-color: green; width: 99px; height: 27px; margin-top: 18px;" @click="postUsuario"><a style="text-decoration:none; color:white;">Salvar</a></button><br /><br />
+
+            </div>
+
+        </div>
+
+    </div>
+ 
+    <script>
+        var usuario = new Vue({
+            el: "#usuario",
+            data: {
+                username: "admin",
+                password: "admin",
+                token: "",
+                id: 0,
+                nome: "",
+                endereco: "",
+                telefone: "",
+                cpf: "",
+                email: "",
+                senha: "",
+                baseURI: "http://localhost:8080/api/usuarios",
+                oauth: "http://localhost:8080/oauth/token"
+            },
+            methods: {
+                postUsuario: function () {
+
+                    var formData = new FormData();
+                    formData.append('username', this.username);
+                    formData.append('password', this.password);
+                    formData.append('grant_type', "password");
+ 
+                    axios.post(this.oauth, formData, { auth: { username: 'mandacaru', password: 'senha123' } }).then((result) => {
+                        this.token = result.data.access_token;
+
+                        let obj = {
+                        nome: this.nome,
+                        endereco: this.endereco,
+                        telefone: this.telefone,
+                        cpf: this.cpf,
+                        email: this.email,
+                        senha: this.senha,
+                        };
+
+                        const config = {
+                        headers: { Authorization: "Bearer " + this.token }
+                        };
+ 
+                        axios.post(this.baseURI, obj, config).then((result) => {
+                        this.usuario = result.data;
+                        });
+
+                    });
+
+                },
+            },
+        });
+    </script>
+
+</body>
+
+</html>
