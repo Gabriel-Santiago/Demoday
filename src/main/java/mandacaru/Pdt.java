@@ -41,10 +41,8 @@ public class Pdt {
     	String result = restTemplate.postForObject(uri, httpEntity, String.class);
 		
 		JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-		
-		String token = jsonObject.get("access_token").getAsString();
 		 
-        return token;
+        return jsonObject.get("access_token").getAsString();
     }
     
     // requisão do id do processo da pdt sing
@@ -91,10 +89,8 @@ public class Pdt {
     	String result = restTemplate.postForObject(uri, httpEntity, String.class);
     	
     	JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-		
-		String processId = jsonObject.get("id").getAsString();
 		 
-        return processId;
+        return jsonObject.get("id").getAsString();
     }
     
     // requisão do id do documento da pdt sing
@@ -155,13 +151,11 @@ public class Pdt {
         HttpEntity<MultiValueMap<String, Object>> requestEntity =
                 new HttpEntity<>(body, headers);
         
-        ResponseEntity<String> response = restTemplate.exchange(
+        restTemplate.exchange(
                 uri,
                 HttpMethod.POST,
                 requestEntity,
                 String.class);
-        
-        System.out.println(response);
     	
     }
     
@@ -187,15 +181,11 @@ public class Pdt {
     	
     	HttpEntity<String> httpEntity = new HttpEntity<>(jsontext,headers);
     	
-    	ResponseEntity<String> responseEntity = restTemplate.exchange(
+    	restTemplate.exchange(
     			uri, 
     			HttpMethod.PATCH, 
     			httpEntity, 
     			String.class);
-    	
-    	System.out.println(responseEntity);
-    		
-
     }
     
     // retorna o status do processo
@@ -218,9 +208,7 @@ public class Pdt {
     	
     	JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
 		
-		String check = jsonObject.get("status").getAsString();
-    	
-    	return check;
+    	return jsonObject.get("status").getAsString();
     }
     
     public String pdtCheckProcess(String token, String processId) throws ParseException{
@@ -241,9 +229,8 @@ public class Pdt {
     	
     	JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
 		
-		String check = jsonObject.get("status").getAsString();
+    	return jsonObject.get("status").getAsString();
     	
-    	return check;
     }
     
 }

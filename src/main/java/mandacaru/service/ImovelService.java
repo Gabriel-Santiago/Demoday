@@ -3,6 +3,9 @@ package mandacaru.service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.tomcat.util.json.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +33,7 @@ public class ImovelService {
 		imovelRepository.save(imovel);				
 	}
 	
-	public void save(int usuario_id, Imovel entity) throws ParseException, IOException, InterruptedException {
+	public void save(int usuario_id, Imovel entity) throws ParseException, IOException {
 		Pdt pdt = new Pdt();
 		String token = pdt.pdtToken();
     	String processId = pdt.pdtProcess(token);
@@ -39,8 +42,12 @@ public class ImovelService {
     	
     	pdt.pdtUpDocument(token, processId, documentId);
     	
-    	while(pdt.pdtCheckDocument(token, processId, documentId) != "DONE") {
-    		pdt.wait();
+    	while(!pdt.pdtCheckDocument(token, processId, documentId).equals("DONE")) {
+    		try {
+    		    Thread.sleep(1 * 1000);
+    		} catch (InterruptedException ie) {
+    		    Thread.currentThread().interrupt();
+    		}
     	}
     	
     	pdt.patch(token, processId);
