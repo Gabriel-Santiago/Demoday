@@ -15,7 +15,7 @@
  
 <body style="background-color: papayawhip;">
  
-    <div id="app">
+    <div id="imoveis">
 
         <h1 style="text-align:center; padding-top: 54px; font-size: 54px; color: gray; font-weight: bold;">Bem Vindo!</h1>
 
@@ -23,7 +23,7 @@
 
             <div style="display: inline-block; margin: 5px;">
 
-                <button style="background-color: green; border-color: green; width: 126px; height: 36px; margin-top: 18px;"><a href="imoveis.html" style="text-decoration:none; color:white;">Listar Imóveis</a></button> <br /><br />
+                <button @click="MostrarImoveis" style="background-color: green; border-color: green; width: 126px; height: 36px; margin-top: 18px;"><a href="" style="text-decoration:none; color:white;">Listar Imóveis</a></button> <br /><br />
 
             </div>
 
@@ -32,22 +32,56 @@
                 <button style="background-color: green; border-color: green; width: 126px; height: 36px; margin-top: 18px;"><a href="imovel.html" style="text-decoration:none; color:white;">Cadastrar Imóvel</a></button> <br /><br />
 
             </div>
+            
+            <p>{{ imovel }}</p>
+ 
+            <ul>
+                <li v-for="imovel in imovels" :key="imovel.id">
+                    <h4>{{ imovel.id }}</h4>
+                    <p>{{ imovel.titulo }}</p>
+                    <p>{{ imovel.endereco }}</p>
+                    <p>{{ imovel.metros_quadrados_de_terreno }}</p>
+                    <p>{{ imovel.preco }}</p>
+                    <p>{{ imovel.quantidade_de_quartos }}</p>
+                    <p>{{ imovel.quantidade_de_banheiros }}</p>
+                    <p>{{ imovel.quantidade_de_vagas_de_garagem }}</p>
+                </li>
+            </ul>
 
         </div>
-
+        
     </div>
  
     <script>
-    var app = new Vue({
-        el: "#app",
+    var imoveis = new Vue({
+        el: "#imoveis",
         data: {
             email: "",
             password: "",
             token: "",
+            id: 0,
+            titulo: "",
+            endereco: "",
+            metros_quadrados_de_terreno: "",
+            preco: "",
+            quantidade_de_quartos: "",
+            quantidade_de_banheiros: "",
+            quantidade_de_vagas_de_garagem: "",
+            imovel: {},
+            imovels: [],
+            baseURI: "http://localhost:8080/api/usuarios/{id}/imoveis",
             oauth: "http://localhost:8080/oauth/token"
         },
         methods: {
-
+        	MostrarImoveis: function () {
+                    const config = {
+                        headers: { Authorization: "Bearer " + this.token }
+                    };
+ 
+                    axios.get(this.baseURI, config).then((result) => {
+                        this.products = result.data;
+                    });
+                },
         },
     });
     </script>
