@@ -1,15 +1,9 @@
 package mandacaru.Atividade_2.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import mandacaru.model.Imovel;
+import mandacaru.model.Usuario;
 import mandacaru.repository.ImovelRepository;
 import mandacaru.service.ImovelService;
 
@@ -33,14 +28,15 @@ public class ImovelServiceTest {
 	private static final int QUANTIDADE_DE_BANHEIROS = 5;
 	private static final double PRECO = 720963.81;
 	private static final int QUANTIDADE_DE_VAGAS_DE_GARAGEM = 8;
+	private static final String DOCUMENTO = "2ff07cc1-1a19-49cd-aa71-96d3352bc245";
+	private static final String PROCESSO = "6229bb06-dabc-420d-ac72-d2cf67c775f9";
+	private Usuario USUARIO;
 	
 	@InjectMocks
 	private ImovelService service;
 	
 	@Mock
 	private ImovelRepository repository;
-	
-	private Imovel imovel;
 	
 	private void start() {
 		Imovel imovel = new Imovel();
@@ -53,31 +49,15 @@ public class ImovelServiceTest {
 		imovel.setQuantidade_de_banheiros(QUANTIDADE_DE_BANHEIROS);
 		imovel.setPreco(PRECO);
 		imovel.setQuantidade_de_vagas_de_garagem(QUANTIDADE_DE_VAGAS_DE_GARAGEM);
+		imovel.setDocumento(DOCUMENTO);
+		imovel.setProcesso(PROCESSO);
+		imovel.setUsuario(USUARIO);
 	}
 	
 	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
 		start();
-	}
-	
-	@Test
-	public void whenFindByIdThenReturnAProduct() {
-		when(repository.findById(anyInt())).thenReturn(Optional.of(imovel));
-
-		Imovel response = service.find(ID);
-		
-		assertNotNull(response);
-		assertEquals(Imovel.class, response.getClass());
-		assertEquals(ID, response.getId());
-		assertEquals(TITULO, response.getTitulo());
-		assertEquals(STATUS, response.getStatus());
-		assertEquals(METROS_QUADRADOS_DE_TERRENO, response.getMetros_quadrados_de_terreno());
-		assertEquals(QUANTIDADE_DE_QUARTOS, response.getQuantidade_de_quartos());
-		assertEquals(QUANTIDADE_DE_BANHEIROS, response.getQuantidade_de_banheiros());
-		assertEquals(ENDERECO, response.getEndereco());
-		assertEquals(PRECO, response.getPreco());
-		assertEquals(QUANTIDADE_DE_VAGAS_DE_GARAGEM, response.getQuantidade_de_vagas_de_garagem());
 	}
 	
 	@Test
@@ -94,48 +74,5 @@ public class ImovelServiceTest {
 		Imovel response = service.find(ID);
 
 		assertNull(response);
-	}
-	
-	@Test
-	public void whenFindAllThenReturnAnList() {
-		when(repository.findAll()).thenReturn(List.of(imovel));
-
-		List<Imovel> response = service.findAll();
-
-		assertNotNull(response);
-		assertEquals(ID, response.get(0).getId());
-		assertEquals(TITULO, response.get(0).getTitulo());
-		assertEquals(STATUS, response.get(0).getStatus());
-		assertEquals(METROS_QUADRADOS_DE_TERRENO, response.get(0).getMetros_quadrados_de_terreno());
-		assertEquals(QUANTIDADE_DE_QUARTOS, response.get(0).getQuantidade_de_quartos());
-		assertEquals(QUANTIDADE_DE_BANHEIROS, response.get(0).getQuantidade_de_banheiros());
-		assertEquals(ENDERECO, response.get(0).getEndereco());
-		assertEquals(PRECO, response.get(0).getPreco());
-		assertEquals(QUANTIDADE_DE_VAGAS_DE_GARAGEM, response.get(0).getQuantidade_de_vagas_de_garagem());
-	}
-	
-	@Test
-	public void whenSaveVerifySuccess() {
-		when(repository.save(any())).thenReturn(imovel);
-		service.save(0, imovel);
-		verify(repository).save(any());
-	}
-	
-	@Test
-	public void whenUpdateVerifySuccess() {
-		when(repository.save(any())).thenReturn(imovel);
-		service.save(1, imovel);
-		verify(repository).save(any());
-	}
-	
-	@Test
-	public void whenDeleteVerifySuccess() {
-		when(repository.findById(anyInt())).thenReturn(Optional.of(imovel));
-		doNothing().when(repository).delete(imovel);
-			
-		service.delete(ID);
-
-		verify(repository).findById(anyInt());
-		verify(repository).delete(any());
 	}	
 }
