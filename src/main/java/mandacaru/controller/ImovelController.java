@@ -59,8 +59,8 @@ public class ImovelController {
     @PostMapping(path = "/teste")
     public String teste() throws ParseException {
     	Pdt t = new Pdt();
-    	
-        return t.pdtCheckProcess(t.pdtToken(), "d2ba1ead-22d3-4752-9633-d2ad63e67e91");
+    	t.patch(t.pdtToken(), "a13565c2-0908-4dff-adb3-a5a66826bce9");
+        return "show";
     }
  
     //

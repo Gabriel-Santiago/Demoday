@@ -174,7 +174,7 @@ public class Pdt {
 
     	restTemplate.setRequestFactory(requestFactory);
     	
-    	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId +"/documents";
+    	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId ;
     	
     	String jsontext = 
     			"{"

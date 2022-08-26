@@ -142,7 +142,7 @@ public class Imovel {
 	}
 	
 	public Imovel(int id, String titulo, String endereco, double metros_quadrados_de_terreno, int quantidade_de_quartos,
-			int quantidade_de_banheiros, int quantidade_de_vagas_de_garagem, double preco, String status,
+			int quantidade_de_banheiros, int quantidade_de_vagas_de_garagem, double preco,
 			String documento, String processo, Usuario usuario) {
 		super();
 		this.id = id;
@@ -153,7 +153,6 @@ public class Imovel {
 		this.quantidade_de_banheiros = quantidade_de_banheiros;
 		this.quantidade_de_vagas_de_garagem = quantidade_de_vagas_de_garagem;
 		this.preco = preco;
-		this.status = status;
 		this.documento = documento;
 		this.processo = processo;
 		this.usuario = usuario;

@@ -39,8 +39,9 @@ public class ImovelService {
     	
     	pdt.pdtUpDocument(token, processId, documentId);
     	
-    	while(pdt.pdtCheckDocument(token, processId, documentId) != "DONE")
-    	{Thread.sleep(1000);}
+    	while(pdt.pdtCheckDocument(token, processId, documentId) != "DONE") {
+    		pdt.wait();
+    	}
     	
     	pdt.patch(token, processId);
     	
