@@ -1,45 +1,56 @@
 <!DOCTYPE html>
 
-<html>
-
+<html lang="en">
+ 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>bem-vindo</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem Vindo</title>
     <script src="https://unpkg.com/vue@2.7.7/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </head>
-
+ 
 <body style="background-color: papayawhip;">
-
+ 
     <div id="app">
 
-        <h1 style="text-align:center; padding-top: 54px; font-size: 54px; color: gray; font-weight: bold;">Bem-Vindo!</h1>
+        <h1 style="text-align:center; padding-top: 54px; font-size: 54px; color: gray; font-weight: bold;">Bem Vindo!</h1>
 
-        <div style="text-align:center;">
+        <div style="text-align:center; margin-top:-27px;"> 
 
-            <button style="background-color: green; border-color: green; width: 99px; height: 40px;"><a href="imovel.html" style="text-decoration:none; color:white;">Cadastrar imovel</a></button>
+            <div style="display: inline-block; margin: 5px;">
+
+                <button style="background-color: green; border-color: green; width: 126px; height: 36px; margin-top: 18px;"><a href="imoveis.html" style="text-decoration:none; color:white;">Listar Imóveis</a></button> <br /><br />
+
+            </div>
+
+            <div style="display: inline-block; margin: 5px;">
+
+                <button style="background-color: green; border-color: green; width: 126px; height: 36px; margin-top: 18px;"><a href="imovel.html" style="text-decoration:none; color:white;">Cadastrar Imóvel</a></button> <br /><br />
+
+            </div>
 
         </div>
-        
+
     </div>
-
+ 
     <script>
-        var app = new Vue({
-            el: "#app",
-            data: {
-                email: "",
-                password: "",
-                token: "",
-                oauth: "http://localhost:8080/oauth/token"
-            },
-            methods: {
+    var app = new Vue({
+        el: "#app",
+        data: {
+            email: "",
+            password: "",
+            token: "",
+            oauth: "http://localhost:8080/oauth/token"
+        },
+        methods: {
 
-            },
-        });
-    </script> 
+        },
+    });
+    </script>
 
 </body>
 
