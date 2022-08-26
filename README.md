@@ -12,10 +12,10 @@
 - [ ] PDTsing
 - [ ] Front
 - [X] CRUD Postman
-- [ ] Teste
-	- [ ] Controller
-		- [ ] Imovel
+- [X] Teste
+	- [X] Controller
+		- [X] Imovel
 		- [X] Usuario
-	- [ ] Service
-		- [ ] Imovel
+	- [X] Service
+		- [X] Imovel
 		- [X] Usuario
