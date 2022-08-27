@@ -1,9 +1,12 @@
 package mandacaru;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.apache.tomcat.util.json.ParseException;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpEntity;
@@ -166,7 +169,9 @@ public class Pdt {
     	
     	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId + "/documents/" + documentId +"/upload";
     	
-    	byte[] pdf = Files.readAllBytes(Paths.get("C:\\dummy.pdf"));
+    	BufferedInputStream in = new BufferedInputStream(new URL("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf").openStream());
+    	
+    	byte[] pdf = in.readAllBytes();
     	
     	MultiValueMap<String, byte[]> map= new LinkedMultiValueMap<String, byte[]>();
     	map.add("file", pdf);
