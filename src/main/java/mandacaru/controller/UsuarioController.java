@@ -37,8 +37,6 @@ public class UsuarioController {
     @ApiResponse(responseCode = "200", description = "Found the users",
 	    content = {@Content(mediaType = "application/json", array =
 	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
-    @ApiResponse(responseCode = "404", description = "Not found Users",
-    content = @Content)
     @ApiResponse(responseCode = "401", description = "unauthorized user",
     content = @Content)
     @GetMapping
@@ -47,6 +45,11 @@ public class UsuarioController {
     }
     
     @Operation(summary = "Get one User by ID")
+    @ApiResponse(responseCode = "200", description = "Found the user",
+    content = {@Content(mediaType = "application/json", array =
+    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
+    @ApiResponse(responseCode = "404", description = "Not Found this user",
+    content = @Content)
     @GetMapping(path = "/{id}")
     public ResponseEntity<Usuario> find(@PathVariable("id") int id) {
     	Usuario usuario = service.find(id);
@@ -58,6 +61,11 @@ public class UsuarioController {
 		}
     }
     
+    @ApiResponse(responseCode = "200", description = "Found the user",
+    content = {@Content(mediaType = "application/json", array =
+    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
+    @ApiResponse(responseCode = "404", description = "Not Found this user",
+    content = @Content)
     @Operation(summary = "Get one User by name")
     @GetMapping(path = "/search")
 	public ResponseEntity<Usuario> findByName(@RequestParam("nome") String nome) {
@@ -71,21 +79,33 @@ public class UsuarioController {
 	}
     
     //
-    
+    @ApiResponse(responseCode = "200", description ="Added a new user",
+    	    content = {@Content(mediaType = "application/json", array =
+    	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
+    @ApiResponse(responseCode = "500", description = "An exception was generated",
+    content = @Content)
     @Operation(summary = "Save one user")
     @PostMapping()
     public void save(@RequestBody Usuario usuario) {
         service.save(0, usuario);
     }
     
-    //
+    @ApiResponse(responseCode = "200", description ="Updated a user",
+    	    content = {@Content(mediaType = "application/json", array =
+    	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
+    @ApiResponse(responseCode = "500", description = "An exception was generated",
+    content = @Content)
     @Operation(summary = "Uptade one user")
     @PutMapping(path = "/{id}")
     public void update(@PathVariable("id") int id, @RequestBody Usuario usuario) {
         service.save(id, usuario);
     }
     
-    //
+    @ApiResponse(responseCode = "200", description ="Deleted a user",
+    	    content = {@Content(mediaType = "application/json", array =
+    	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
+    @ApiResponse(responseCode = "500", description = "An exception was generated",
+    content = @Content)
     @Operation(summary = "Delete one user")
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable("id") int id) {
