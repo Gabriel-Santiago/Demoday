@@ -23,7 +23,7 @@
 
             <div style="display: inline-block; margin: 5px;">
 
-                <button @click="MostrarImoveis" style="background-color: green; border-color: green; width: 126px; height: 36px; margin-top: 18px;"><a href="" style="text-decoration:none; color:white;">Listar Imóveis</a></button> <br /><br />
+                <button @click="MostrarImoveis" style="background-color: green; border-color: green; width: 126px; height: 36px; margin-top: 18px;"><a style="text-decoration:none; color:white;">Listar Imóveis</a></button> <br /><br />
 
             </div>
 
@@ -36,7 +36,7 @@
             <p>{{ imovel }}</p>
  
             <ul>
-                <li v-for="imovel in imovels" :key="imovel.id">
+                <li v-for="imovel in imoveis" :key="imovel.id">
                     <h4>{{ imovel.id }}</h4>
                     <p>{{ imovel.titulo }}</p>
                     <p>{{ imovel.endereco }}</p>
@@ -59,7 +59,7 @@
             email: "",
             password: "",
             token: "",
-            id: 0,
+            id: 1,
             titulo: "",
             endereco: "",
             metros_quadrados_de_terreno: "",
@@ -68,18 +68,19 @@
             quantidade_de_banheiros: "",
             quantidade_de_vagas_de_garagem: "",
             imovel: {},
-            imovels: [],
-            baseURI: "http://localhost:8080/api/usuarios/{id}/imoveis",
+            imoveis: [],
             oauth: "http://localhost:8080/oauth/token"
         },
         methods: {
         	MostrarImoveis: function () {
                     const config = {
-                        headers: { Authorization: "Bearer " + this.token }
+                        headers: { Authorization: "Bearer " + localStorage.token }
                     };
- 
-                    axios.get(this.baseURI, config).then((result) => {
-                        this.products = result.data;
+                    var URI = 'http://localhost:8080/api/usuarios/' + this.id +'/imoveis'
+                    console.log('cucu')
+                    axios.get(URI, config).then((result) => {
+                        console.log('cucu')
+                        this.imoveis = result.data;
                     });
                 },
         },
