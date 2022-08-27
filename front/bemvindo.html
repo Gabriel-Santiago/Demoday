@@ -77,9 +77,10 @@
                         headers: { Authorization: "Bearer " + localStorage.token }
                     };
                     var URI = 'http://localhost:8080/api/usuarios/' + this.id +'/imoveis'
-                    console.log('cucu')
                     axios.get(URI, config).then((result) => {
-                        console.log('cucu')
+                        if (result.status == 401) {
+                            location.replace("index.html")
+                        }
                         this.imoveis = result.data;
                     });
                 },

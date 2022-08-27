@@ -59,9 +59,6 @@
         var imovel = new Vue({
             el: "#imovel",
             data: {
-                email: "",
-                password: "",
-                token: "",
                 id: 1,
                 titulo: "",
                 endereco: "",
@@ -79,7 +76,9 @@
                     const config = {
                         headers: { Authorization: "Bearer " + localStorage.token }
                     };
- 
+                    
+                    var URI = 'http://localhost:8080/api/usuarios/' + this.id +'/imoveis'
+
                     let obj = {
                         titulo: this.titulo,
                         endereco: this.endereco,
@@ -90,11 +89,10 @@
                         quantidade_de_banheiros: this.quantidade_de_banheiros,
                     };
                     
-                    var URI = 'http://localhost:8080/api/usuarios/' + this.id +'/imoveis'
-                    console.log('cucu')
-                    axios.post(URI, config).then((result) => {
-                    	console.log('cucu')
-                        this.imovel = result.data;
+                    axios.post(URI, obj, config).then((result) => {
+                        if (result.status == 401) {
+                            location.replace("index.html")
+                        }
                     });
                 },
             },
