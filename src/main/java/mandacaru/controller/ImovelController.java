@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import mandacaru.Pdt;
 import mandacaru.model.Imovel;
@@ -29,7 +31,8 @@ import mandacaru.service.ImovelService;
 
 @Tag(name = "Imovel")
 @RestController
-@RequestMapping(path = "/api") 
+@RequestMapping(path = "/api")
+@SecurityRequirement(name = "oauth")
 public class ImovelController {
  
     @Autowired
@@ -40,7 +43,7 @@ public class ImovelController {
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
     @Operation(summary = "Find all properties of a user ")
     @GetMapping(path = "/usuarios/{id}/imoveis")
-    public ResponseEntity<List<Imovel>> findallofuser(@PathVariable(value = "id") int id) {
+    public ResponseEntity<List<Imovel>> findallofuser(@Parameter(description = "id of a user to be fetched from the database") @PathVariable(value = "id") int id) {
         return new ResponseEntity<List<Imovel>>(service.findAllOfUser(id), HttpStatus.OK);
     }
     
@@ -55,14 +58,14 @@ public class ImovelController {
         return new ResponseEntity<List<Imovel>>(service.findAll(), HttpStatus.OK);
     }
     
-    @ApiResponse(responseCode = "200", description = "Found the user",
+    @ApiResponse(responseCode = "200", description = "Found the propertie",
     	    content = {@Content(mediaType = "application/json", array =
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
     @ApiResponse(responseCode = "404", description = "property not found",
     	    content = @Content)
     @Operation(summary = "Find property by ID")
     @GetMapping(path = "/imoveis/{id}")
-    public ResponseEntity<Imovel> find(@PathVariable("id") int id) {
+    public ResponseEntity<Imovel> find(@Parameter(description = "id of a propertie to be fetched from the database") @PathVariable("id") int id) {
     	Imovel imovel = service.find(id);
 		
 		if(imovel != null) {
@@ -81,7 +84,7 @@ public class ImovelController {
 	content = @Content)
     @Operation(summary = "Save the property")
     @PostMapping(path = "/usuarios/{id}/imoveis")
-    public void save(@PathVariable("id") int usuario_id,@RequestBody Imovel imovel) throws ParseException, IOException, InterruptedException {
+    public void save(@Parameter(description = "id of a user to be fetched from the database")  @PathVariable("id") int usuario_id,@RequestBody Imovel imovel) throws ParseException, IOException, InterruptedException {
     		
         service.save(usuario_id, imovel);
     }
@@ -103,7 +106,7 @@ public class ImovelController {
 	content = @Content)
     @Operation(summary = "Update a property")
     @PutMapping(path = "/imoveis/{id}")
-    public void update(@PathVariable("id") int id, @RequestBody Imovel imovel) {
+    public void update(@Parameter(description = "id of a propertie to be fetched from the database") @PathVariable("id") int id, @RequestBody Imovel imovel) {
         service.update(id, imovel);
     }
  
@@ -114,7 +117,7 @@ public class ImovelController {
     		content = @Content)
     @Operation(summary = "Delete a property")
     @DeleteMapping(path = "/imoveis/{id}")
-    public void delete(@PathVariable("id") int id) {
+    public void delete(@Parameter(description = "id of a propertie to be fetched from the database") @PathVariable("id") int id) {
         service.delete(id);
     }
 }

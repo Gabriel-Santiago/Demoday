@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import mandacaru.model.Usuario;
 import mandacaru.service.UsuarioService;
@@ -28,6 +30,7 @@ import mandacaru.service.UsuarioService;
 @Tag(name = "Usuario")
 @RestController
 @RequestMapping(path = "/api/usuarios")
+@SecurityRequirement(name = "oauth")
 public class UsuarioController {
  
     @Autowired
@@ -51,7 +54,7 @@ public class UsuarioController {
     @ApiResponse(responseCode = "404", description = "Not Found this user",
     content = @Content)
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Usuario> find(@PathVariable("id") int id) {
+    public ResponseEntity<Usuario> find(@Parameter(description = "id of a user to be fetched from the database") @PathVariable("id") int id) {
     	Usuario usuario = service.find(id);
 		
 		if(usuario != null) {
@@ -68,7 +71,7 @@ public class UsuarioController {
     content = @Content)
     @Operation(summary = "Get one User by name")
     @GetMapping(path = "/search")
-	public ResponseEntity<Usuario> findByName(@RequestParam("nome") String nome) {
+	public ResponseEntity<Usuario> findByName(@Parameter(description = "name of a user to be fetched from the database")  @RequestParam("nome") String nome) {
 		Usuario usuario = service.findByName(nome);
 		
 		if(usuario != null) {
@@ -97,7 +100,7 @@ public class UsuarioController {
     content = @Content)
     @Operation(summary = "Uptade one user")
     @PutMapping(path = "/{id}")
-    public void update(@PathVariable("id") int id, @RequestBody Usuario usuario) {
+    public void update(@Parameter(description = "id of a user to be fetched from the database")  @PathVariable("id") int id, @RequestBody Usuario usuario) {
         service.save(id, usuario);
     }
     
@@ -108,7 +111,7 @@ public class UsuarioController {
     content = @Content)
     @Operation(summary = "Delete one user")
     @DeleteMapping(path = "/{id}")
-    public void delete(@PathVariable("id") int id) {
+    public void delete(@Parameter(description = "id of a user to be fetched from the database") @PathVariable("id") int id) {
         service.delete(id);
     }
 }
