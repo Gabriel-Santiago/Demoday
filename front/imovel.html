@@ -41,6 +41,7 @@
 
                 <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Total de Banheiros:</p><input type="number" name="" id="" v-model="quantidade_de_banheiros" placeholder="1"  min="0" /><br /><br />
 
+				<p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Imagem:</p><button style="border:none; background:none"><input type="file" accept="image/*" multiple name="" id="" v-model="foto"/></button><br /><br />
 
             </div>
             
@@ -67,6 +68,7 @@
                 quantidade_de_quartos: "",
                 quantidade_de_banheiros: "",
                 quantidade_de_vagas_de_garagem: "",
+                foto: "",
                 imovel: {},
                 imoveis: [],
                 oauth: "http://localhost:8080/oauth/token"
@@ -87,6 +89,7 @@
                         quantidade_de_vagas_de_garagem: this.quantidade_de_vagas_de_garagem,
                         preco: this.preco,
                         quantidade_de_banheiros: this.quantidade_de_banheiros,
+                        foto: this.foto,
                     };
                     
                     axios.post(URI, obj, config).then((result) => {

@@ -60,18 +60,19 @@ tbody tr:nth-child(even) {
 
             </div>
             
-            <h1>Imoveis</h1>
+            <h1>Imóveis</h1>
 
             <table class="table table-striped table-bordered" style="display: inline-block;">
                 <thead>
                     <tr>
-                        <th>titulo</th>
-                        <th>endereco</th>
-                        <th>metros quadrados de terreno</th>
-                        <th>quantidade de quartos</th>
-                        <th>quantidade de banheiros</th>
-                        <th>quantidade de vagas de garagem</th>
-                        <th>preço</th>
+                        <th>Título</th>
+                        <th>Endereco</th>
+                        <th>Área do terreno (m²)</th>
+                        <th>Qtd de quartos</th>
+                        <th>Qtd de banheiros</th>
+                        <th>Vagas de garagem</th>
+                        <th>Preço</th>
+                        <th>Fotos</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,6 +84,7 @@ tbody tr:nth-child(even) {
                         <td>{{ imovel.quantidade_de_banheiros }}</td>
                         <td>{{ imovel.quantidade_de_vagas_de_garagem }}</td>
                         <td>{{ imovel.preco }}</td>
+                        <td>{{ imovel.foto }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -106,6 +108,7 @@ tbody tr:nth-child(even) {
             quantidade_de_quartos: "",
             quantidade_de_banheiros: "",
             quantidade_de_vagas_de_garagem: "",
+            foto: "",
             imovel: {},
             imoveis: [],
             oauth: "http://localhost:8080/oauth/token"

@@ -29,6 +29,7 @@ public class Imovel {
 	private String status;
 	private String documento;
 	private String processo;
+	private String foto;
 	
 	
 	@ManyToOne
@@ -132,18 +133,26 @@ public class Imovel {
 		this.documento = documento;
 	}
 	
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+	
 	@Override
 	public String toString() {
 		return "Imovel [id=" + id + ", titulo=" + titulo + ", endereco=" + endereco + ", metros_quadrados_de_terreno="
 				+ metros_quadrados_de_terreno + ", quantidade_de_quartos=" + quantidade_de_quartos
 				+ ", quantidade_de_banheiros=" + quantidade_de_banheiros + ", quantidade_de_vagas_de_garagem="
 				+ quantidade_de_vagas_de_garagem + ", preco=" + preco + ", status=" + status + ", documento="
-				+ documento + ", processo=" + processo + ", usuario=" + usuario + "]";
+				+ documento + ", processo=" + processo + ", foto=" + foto + ", usuario=" + usuario + "]";
 	}
-	
+
 	public Imovel(int id, String titulo, String endereco, double metros_quadrados_de_terreno, int quantidade_de_quartos,
 			int quantidade_de_banheiros, int quantidade_de_vagas_de_garagem, double preco,
-			String documento, String processo, Usuario usuario) {
+			String documento, String processo, Usuario usuario, String foto) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -156,6 +165,7 @@ public class Imovel {
 		this.documento = documento;
 		this.processo = processo;
 		this.usuario = usuario;
+		this.foto = foto;
 	}
 
 	public Imovel() {
