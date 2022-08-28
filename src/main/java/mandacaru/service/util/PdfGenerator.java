@@ -1,5 +1,6 @@
 package mandacaru.service.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -17,16 +18,14 @@ public class PdfGenerator {
 
 	public byte[] criarPdf(Imovel imovel) throws IOException {
 			
-			 String caminhoRelatorio = "D:\\teste\\Imovel.pdf";
-			
 			 Document document = new Document();
+			 ByteArrayOutputStream out = new ByteArrayOutputStream();
 	         try {
 	
-	             PdfWriter.getInstance(document, new FileOutputStream(caminhoRelatorio));
+	             PdfWriter.getInstance(document, out);
 	             document.open();
 	
 	             // adicionando um parágrafo no documento
-	             document.add(new Paragraph("Usuario:"+ imovel.getUsuario()));
 	             document.add(new Paragraph("Titulo:"+ imovel.getTitulo()));
 	             document.add(new Paragraph("Endereço:"+ imovel.getEndereco()));
 	             document.add(new Paragraph("Metros Quadrados do terreno:"+ imovel.getMetros_quadrados_de_terreno()));
@@ -39,15 +38,9 @@ public class PdfGenerator {
 	         catch(DocumentException de) {
 	             System.err.println(de.getMessage());
 	         }
-	         catch(IOException ioe) {
-	             System.err.println(ioe.getMessage());
-	         }
 	         document.close();
 	        
-	        Path pdfPath = Paths.get("caminhoRelatorio");
-	        byte[] pdf = Files.readAllBytes(pdfPath);
-	        
-			return pdf;
+			return out.toByteArray();
 	     	}
 
 		 }
