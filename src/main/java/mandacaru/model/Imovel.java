@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -33,6 +34,7 @@ public class Imovel {
 	@JsonIgnore
 	private String processo;
 	@OneToMany(mappedBy = "imovel")
+	@Lob
 	private List<Imagem> imagens;
 	
 	
@@ -128,20 +130,27 @@ public class Imovel {
 	public void setProcesso(String processo) {
 		this.processo = processo;
 	}
-
 	
+	public List<Imagem> getImagens() {
+		return imagens;
+	}
+
+	public void setImagens(List<Imagem> imagens) {
+		this.imagens = imagens;
+	}
+
 	@Override
 	public String toString() {
 		return "Imovel [id=" + id + ", titulo=" + titulo + ", endereco=" + endereco + ", metros_quadrados_de_terreno="
 				+ metros_quadrados_de_terreno + ", quantidade_de_quartos=" + quantidade_de_quartos
 				+ ", quantidade_de_banheiros=" + quantidade_de_banheiros + ", quantidade_de_vagas_de_garagem="
-				+ quantidade_de_vagas_de_garagem + ", preco=" + preco + ", status=" + status +
-				", processo=" + processo + ", usuario=" + usuario + "]";
+				+ quantidade_de_vagas_de_garagem + ", preco=" + preco + ", status=" + status + ", processo=" + processo
+				+ ", imagens=" + imagens + ", usuario=" + usuario + "]";
 	}
 
 	public Imovel(int id, String titulo, String endereco, double metros_quadrados_de_terreno, int quantidade_de_quartos,
-			int quantidade_de_banheiros, int quantidade_de_vagas_de_garagem, double preco,
-			String documento, String processo, Usuario usuario) {
+			int quantidade_de_banheiros, int quantidade_de_vagas_de_garagem, double preco, String status,
+			String processo, List<Imagem> imagens, Usuario usuario) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -151,7 +160,9 @@ public class Imovel {
 		this.quantidade_de_banheiros = quantidade_de_banheiros;
 		this.quantidade_de_vagas_de_garagem = quantidade_de_vagas_de_garagem;
 		this.preco = preco;
+		this.status = status;
 		this.processo = processo;
+		this.imagens = imagens;
 		this.usuario = usuario;
 	}
 

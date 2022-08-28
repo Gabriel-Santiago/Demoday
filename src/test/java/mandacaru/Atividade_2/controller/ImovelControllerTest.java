@@ -35,7 +35,6 @@ public class ImovelControllerTest {
 	private static final int QUANTIDADE_DE_BANHEIROS = 5;
 	private static final double PRECO = 720963.81;
 	private static final int QUANTIDADE_DE_VAGAS_DE_GARAGEM = 8;
-	private static final String DOCUMENTO = "2ff07cc1-1a19-49cd-aa71-96d3352bc245";
 	private static final String PROCESSO = "6229bb06-dabc-420d-ac72-d2cf67c775f9";
 	private Usuario USUARIO;
 	
@@ -58,7 +57,6 @@ public class ImovelControllerTest {
 		imovel.setQuantidade_de_banheiros(QUANTIDADE_DE_BANHEIROS);
 		imovel.setPreco(PRECO);
 		imovel.setQuantidade_de_vagas_de_garagem(QUANTIDADE_DE_VAGAS_DE_GARAGEM);
-		imovel.setDocumento(DOCUMENTO);
 		imovel.setProcesso(PROCESSO);
 		imovel.setUsuario(USUARIO);
 	}
