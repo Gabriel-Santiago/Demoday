@@ -3,24 +3,23 @@ package mandacaru;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+
+
 import org.apache.tomcat.util.json.ParseException;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestTemplate; 
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+//import mandacaru.service.util.PdfGenerator;
 
 public class Pdt {
 	
@@ -163,12 +162,13 @@ public class Pdt {
         return documentId;
     }
     
-    // upload de documento do processo não esta funcionando
+    // upload de documento do processo
     
     public void pdtUpDocument(String token, String processId, String documentId) throws ParseException, IOException{
     	
     	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId + "/documents/" + documentId +"/upload";
     	
+    	//byte [] pdfImovel = criarPdf();
     	BufferedInputStream in = new BufferedInputStream(new URL("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf").openStream());
     	
     	byte[] pdf = in.readAllBytes();
