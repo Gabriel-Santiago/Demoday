@@ -1,10 +1,6 @@
 package mandacaru;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.net.URL;
-
-
 
 import org.apache.tomcat.util.json.ParseException;
 import org.springframework.http.ContentDisposition;
@@ -15,7 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate; 
+import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

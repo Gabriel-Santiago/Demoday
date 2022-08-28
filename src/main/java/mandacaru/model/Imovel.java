@@ -30,7 +30,7 @@ public class Imovel {
 	private int quantidade_de_vagas_de_garagem;
 	private double preco;
 	private String status;
-	private String documento;
+	@JsonIgnore
 	private String processo;
 	@OneToMany(mappedBy = "imovel")
 	private List<Imagem> imagens;
@@ -129,21 +129,14 @@ public class Imovel {
 		this.processo = processo;
 	}
 
-	public String getDocumento() {
-		return documento;
-	}
-
-	public void setDocumento(String documento) {
-		this.documento = documento;
-	}
 	
 	@Override
 	public String toString() {
 		return "Imovel [id=" + id + ", titulo=" + titulo + ", endereco=" + endereco + ", metros_quadrados_de_terreno="
 				+ metros_quadrados_de_terreno + ", quantidade_de_quartos=" + quantidade_de_quartos
 				+ ", quantidade_de_banheiros=" + quantidade_de_banheiros + ", quantidade_de_vagas_de_garagem="
-				+ quantidade_de_vagas_de_garagem + ", preco=" + preco + ", status=" + status + ", documento="
-				+ documento + ", processo=" + processo + ", usuario=" + usuario + "]";
+				+ quantidade_de_vagas_de_garagem + ", preco=" + preco + ", status=" + status +
+				", processo=" + processo + ", usuario=" + usuario + "]";
 	}
 
 	public Imovel(int id, String titulo, String endereco, double metros_quadrados_de_terreno, int quantidade_de_quartos,
@@ -158,7 +151,6 @@ public class Imovel {
 		this.quantidade_de_banheiros = quantidade_de_banheiros;
 		this.quantidade_de_vagas_de_garagem = quantidade_de_vagas_de_garagem;
 		this.preco = preco;
-		this.documento = documento;
 		this.processo = processo;
 		this.usuario = usuario;
 	}

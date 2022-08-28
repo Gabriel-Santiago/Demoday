@@ -13,12 +13,12 @@ public class PdfGenerator {
 	public byte[] criarPdf(Imovel imovel) {
 			
 			 Document document = new Document();
-			 ByteArrayOutputStream out = new ByteArrayOutputStream();
-	         
-	         document.open();
+			 ByteArrayOutputStream out = new ByteArrayOutputStream();    
 	         
 	         try {
 	        	 PdfWriter.getInstance(document, out);
+	        	 
+	        	 document.open();
 	        	 
 	        	 document.add(new Paragraph("Titulo:"+ imovel.getTitulo()));
 		         document.add(new Paragraph("Endereço:"+ imovel.getEndereco()));

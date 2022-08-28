@@ -75,6 +75,11 @@ public class ImovelController {
 		}
     }
     
+    @GetMapping(path = "/imoveis/prontos")
+    public ResponseEntity<List<Imovel>> findalldone() {
+        return new ResponseEntity<List<Imovel>>(service.findAllDone(), HttpStatus.OK);
+    }
+    
     @ApiResponse(responseCode = "200", description = "User-added property",
     	    content = {@Content(mediaType = "application/json", array =
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})

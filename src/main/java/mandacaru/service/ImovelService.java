@@ -27,8 +27,14 @@ public class ImovelService {
 	public void update(int id, Imovel entity) {
 		Imovel imovel = find(id);		
 		imovel.setTitulo(entity.getTitulo());
-		
 		imovelRepository.save(imovel);				
+	}
+	
+	public void status(Imovel entity, Pdt pdt, String token) throws ParseException {
+		if(pdt.pdtCheckProcess(token, entity.getProcesso()).equals("DONE")) {
+			entity.setStatus("Pronto");
+		}
+		imovelRepository.save(entity);				
 	}
 	
 	public void save(int usuario_id, Imovel entity) throws ParseException, IOException {
@@ -52,10 +58,8 @@ public class ImovelService {
     	
     	pdt.patch(token, processId);
     	
-		
-		entity.setDocumento(documentId);
 		entity.setProcesso(processId);
-		entity.setStatus(pdt.pdtCheckProcess(token, processId));
+		entity.setStatus("Pendente");
 		imovelRepository.save(entity);				
 	}
 
@@ -82,5 +86,24 @@ public class ImovelService {
 	
 	public List<Imovel> findAll() {
 		return imovelRepository.findAll();
+	}
+	
+	public List<Imovel> findAllDone() {
+		Pdt pdt = new Pdt();
+		String token = null;
+		try {
+			token = pdt.pdtToken();
+		} catch (ParseException e1) {}
+		
+		List<Imovel> imoveis = imovelRepository.findByStatus("Pendente");
+		
+		for (Imovel imovel : imoveis) {
+			try {
+				status(imovel,pdt,token);
+			} catch (ParseException e) {}
+			
+		}
+		
+		return imovelRepository.findByStatus("Pronto");
 	}
 }

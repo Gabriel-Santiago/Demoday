@@ -9,4 +9,5 @@ import mandacaru.model.Imovel;
 public interface ImovelRepository extends JpaRepository<Imovel, Integer> {
 
 	List<Imovel> findByUsuarioId(int id);
+	List<Imovel> findByStatus(String status);
 }

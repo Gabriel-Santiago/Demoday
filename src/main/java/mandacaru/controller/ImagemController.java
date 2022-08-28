@@ -1,8 +1,10 @@
 package mandacaru.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,15 +26,19 @@ public class ImagemController {
     ImagemService service;
 
 	@PostMapping("/imoveis/{id}/imagens") 
-	public String uploadImage(@PathVariable("id") int id,@RequestParam("file") MultipartFile file) throws IOException {
+	public void uploadImage(@PathVariable("id") int id,@RequestParam("file") MultipartFile file) throws IOException {
 		
 		Imagem teste = new Imagem();
 		teste.setFoto(file.getBytes());
 		teste.setTipo(file.getContentType());
 		
 		service.save(teste, id);
+    }
+	
+	@GetMapping("/imoveis/{id}/imagens") 
+	public ResponseEntity<List<Imagem>> getImageofimovel (@PathVariable("id") int id){
 		
-        return "deu certo";
+		return new ResponseEntity<List<Imagem>>(service.findAllOfImovel(id), HttpStatus.OK);
     }
 	
 	@GetMapping("/imagem/info/{id}") 
@@ -42,14 +48,8 @@ public class ImagemController {
         
     }
 	
-	@GetMapping("/imagem/{id}") 
-	public byte[] getImage(@PathVariable("id") int id) {
-		
-        return service.find(id).getFoto();
-        
-    }
-	@GetMapping(path = {"/imagem/ver/{id}"})
-    public ResponseEntity<byte[]> getImageVer(@PathVariable("id") int id){
+	@GetMapping("/imagem/{id}")
+    public ResponseEntity<byte[]> getImage(@PathVariable("id") int id){
 
         Imagem img = service.find(id);
 
