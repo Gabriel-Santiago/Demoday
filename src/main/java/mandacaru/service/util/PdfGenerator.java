@@ -26,7 +26,7 @@ public class PdfGenerator {
 	             document.open();
 	
 	             // adicionando um parágrafo no documento
-	             document.add(new Paragraph("id:"+ imovel.getId()));
+	             document.add(new Paragraph("Usuario:"+ imovel.getUsuario()));
 	             document.add(new Paragraph("Titulo:"+ imovel.getTitulo()));
 	             document.add(new Paragraph("Endereço:"+ imovel.getEndereco()));
 	             document.add(new Paragraph("Metros Quadrados do terreno:"+ imovel.getMetros_quadrados_de_terreno()));
@@ -34,6 +34,7 @@ public class PdfGenerator {
 	             document.add(new Paragraph("Quantidade de Banheiros:"+ imovel.getQuantidade_de_banheiros()));
 	             document.add(new Paragraph("Quantidade de Vagas na Garagem:"+ imovel.getQuantidade_de_vagas_de_garagem()));
 	             document.add(new Paragraph("Preço:"+ imovel.getPreco()));
+	            
 	         }
 	         catch(DocumentException de) {
 	             System.err.println(de.getMessage());

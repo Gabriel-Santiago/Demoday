@@ -13,6 +13,7 @@ import mandacaru.model.Imovel;
 import mandacaru.model.Usuario;
 import mandacaru.repository.ImovelRepository;
 import mandacaru.repository.UsuarioRepository;
+import mandacaru.service.util.PdfGenerator;
 
 @Service
 public class ImovelService {
@@ -37,7 +38,9 @@ public class ImovelService {
     	String documentId = pdt.pdtDocument(token, processId);
     	Usuario usuario = usuarioRepository.findById(usuario_id).get();
     	
-    	pdt.pdtUpDocument(token, processId, documentId);
+    	entity.setUsuario(usuario);    	
+
+    	pdt.pdtUpDocument(token, processId, documentId,new PdfGenerator().criarPdf(entity));
     	
     	while(!pdt.pdtCheckDocument(token, processId, documentId).equals("DONE")) {
     		try {
@@ -49,7 +52,7 @@ public class ImovelService {
     	
     	pdt.patch(token, processId);
     	
-		entity.setUsuario(usuario);
+		
 		entity.setDocumento(documentId);
 		entity.setProcesso(processId);
 		entity.setStatus(pdt.pdtCheckProcess(token, processId));

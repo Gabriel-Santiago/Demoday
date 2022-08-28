@@ -164,14 +164,10 @@ public class Pdt {
     
     // upload de documento do processo
     
-    public void pdtUpDocument(String token, String processId, String documentId) throws ParseException, IOException{
+    public void pdtUpDocument(String token, String processId, String documentId,byte[] pdf) throws ParseException, IOException{
     	
     	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId + "/documents/" + documentId +"/upload";
     	
-    	//byte [] pdfImovel = criarPdf();
-    	BufferedInputStream in = new BufferedInputStream(new URL("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf").openStream());
-    	
-    	byte[] pdf = in.readAllBytes();
     	
     	MultiValueMap<String, byte[]> map= new LinkedMultiValueMap<String, byte[]>();
     	map.add("file", pdf);
