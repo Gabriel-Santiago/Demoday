@@ -1,11 +1,14 @@
 package mandacaru.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -29,8 +32,8 @@ public class Imovel {
 	private String status;
 	private String documento;
 	private String processo;
-	@JsonIgnore
-	private byte[] imagens;
+	@OneToMany(mappedBy = "imovel")
+	private List<Imagem> imagens;
 	
 	
 	@ManyToOne

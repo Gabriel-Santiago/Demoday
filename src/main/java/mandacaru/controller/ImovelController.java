@@ -51,7 +51,7 @@ public class ImovelController {
     	    content = {@Content(mediaType = "application/json", array =
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
     @ApiResponse(responseCode = "401", description = "No authorization",
-    	content = @Content)
+    		content = @Content)
     @Operation(summary = "Find all properties")
     @GetMapping(path = "/imoveis")
     public ResponseEntity<List<Imovel>> findall() {
@@ -79,9 +79,9 @@ public class ImovelController {
     	    content = {@Content(mediaType = "application/json", array =
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
     @ApiResponse(responseCode = "500", description = "An exception was generated",
-    	content = @Content)
+    		content = @Content)
     @ApiResponse(responseCode = "400", description = "Incorrect request syntax",
-	content = @Content)
+			content = @Content)
     @Operation(summary = "Save the property")
     @PostMapping(path = "/usuarios/{id}/imoveis")
     public void save(@Parameter(description = "id of a user to be fetched from the database")  @PathVariable("id") int usuario_id,@RequestBody Imovel imovel) throws ParseException, IOException, InterruptedException {
@@ -101,9 +101,9 @@ public class ImovelController {
     	    content = {@Content(mediaType = "application/json", array =
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
     @ApiResponse(responseCode = "500", description = "An exception was generated",
-    	content = @Content)
+    		content = @Content)
     @ApiResponse(responseCode = "400", description = "Incorrect request syntax",
-	content = @Content)
+			content = @Content)
     @Operation(summary = "Update a property")
     @PutMapping(path = "/imoveis/{id}")
     public void update(@Parameter(description = "id of a propertie to be fetched from the database") @PathVariable("id") int id, @RequestBody Imovel imovel) {

@@ -82,6 +82,7 @@ public class UsuarioController {
 	}
     
     //
+    
     @ApiResponse(responseCode = "200", description ="Added a new user",
     	    content = {@Content(mediaType = "application/json", array =
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
@@ -93,6 +94,8 @@ public class UsuarioController {
         service.save(0, usuario);
     }
     
+    //
+    
     @ApiResponse(responseCode = "200", description ="Updated a user",
     	    content = {@Content(mediaType = "application/json", array =
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
@@ -103,6 +106,8 @@ public class UsuarioController {
     public void update(@Parameter(description = "id of a user to be fetched from the database")  @PathVariable("id") int id, @RequestBody Usuario usuario) {
         service.save(id, usuario);
     }
+    
+    //
     
     @ApiResponse(responseCode = "200", description ="Deleted a user",
     	    content = {@Content(mediaType = "application/json", array =
