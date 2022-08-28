@@ -23,14 +23,14 @@ public class ImagemController {
 	@Autowired
     ImagemService service;
 
-	@PostMapping("/uploadimagem") 
-	public String uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+	@PostMapping("/imoveis/{id}/imagens") 
+	public String uploadImage(@PathVariable("id") int id,@RequestParam("file") MultipartFile file) throws IOException {
 		
 		Imagem teste = new Imagem();
 		teste.setFoto(file.getBytes());
 		teste.setTipo(file.getContentType());
 		
-		service.save(teste, 2);
+		service.save(teste, id);
 		
         return "deu certo";
     }
