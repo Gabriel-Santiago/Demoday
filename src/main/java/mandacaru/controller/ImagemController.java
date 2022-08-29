@@ -54,11 +54,14 @@ public class ImagemController {
     }
 	
 	@GetMapping("/imagem/{id}")
-    public byte[] getImage(@PathVariable("id") int id){
+    public ResponseEntity<byte[]> getImage(@PathVariable("id") int id){
 
         Imagem img = service.find(id);
 
-        return img.getFoto();
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.valueOf(img.getTipo()))
+                .body(img.getFoto());
     }
 	
 	

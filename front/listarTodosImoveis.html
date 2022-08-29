@@ -84,14 +84,11 @@ tbody tr:nth-child(even) {
                         <td>{{ imovel.quantidade_de_banheiros }}</td>
                         <td>{{ imovel.quantidade_de_vagas_de_garagem }}</td>
                         <td>{{ imovel.preco }}</td>
-                        <td><teste></teste></td>
+                        <td><template v-for="imagem in imovel.imagens"><img src="$imagem.id" width="100" height="100"/></template></td>
                     </tr>
                 </tbody>
             </table>
-            
-
-        </div>
-        
+        </div>        
     </div>
  
     <script>
@@ -116,14 +113,6 @@ tbody tr:nth-child(even) {
                     });
                 },
         },
-        teste: function (){
-
-            return createElement('h1', "hugahuga")
-
-        },
-        components: {
-        'teste' : teste
-    }
     });
     </script>
 

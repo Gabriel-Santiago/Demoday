@@ -28,9 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.httpBasic()
 		.and().csrf().disable()
-		.authorizeHttpRequests().antMatchers("/api/imagem/**").permitAll().anyRequest().authenticated()
-		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 
 	@Override
@@ -42,6 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) {
 		web.ignoring().antMatchers("/api/posts/**").antMatchers(HttpMethod.OPTIONS, "/oauth/token");
 		web.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**");
+		web.ignoring().antMatchers("/api/imagem/**");
 	}
 
 	@Bean
