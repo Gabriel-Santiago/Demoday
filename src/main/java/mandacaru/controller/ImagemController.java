@@ -35,17 +35,6 @@ public class ImagemController {
 		service.save(teste, id);
     }
 	
-	@GetMapping("/imoveis/{id}/imagens") 
-	public ResponseEntity<byte[]> getImageofimovel (@PathVariable("id") int id){
-		
-		Imagem img = service.findAllOfImovel(id);
-
-		return ResponseEntity
-                .ok()
-                .contentType(MediaType.valueOf(img.getTipo()))
-                .body(img.getFoto());
-    }
-	
 	@GetMapping("/imagem/info/{id}") 
 	public Imagem getImageInfo(@PathVariable("id") int id) {
 		

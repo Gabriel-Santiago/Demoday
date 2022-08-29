@@ -43,6 +43,8 @@ public class OAuthConfiguration {
 			resources.resourceId(RESOURCE_ID);
 		}
 	}
+	
+	
 
 	@Configuration
 	@EnableAuthorizationServer
