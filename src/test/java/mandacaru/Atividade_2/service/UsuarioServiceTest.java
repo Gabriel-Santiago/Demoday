@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -155,19 +154,5 @@ public class UsuarioServiceTest {
 
 			verify(repository).findById(anyInt());
 			verify(repository).delete(any());
-		}
-		
-		@Test
-		public void whenFindByNameThenReturnAProduct() {
-			when(repository.findFirstByNome(anyString())).thenReturn(usuario);
-			Usuario response = service.findByName(NOME);
-			assertNotNull(response);
-			assertEquals(NOME, response.getNome());
-		}
-		
-		@Test
-		public void whenFindByNameThenReturnNull() {
-			Usuario response = service.findByName("as");
-			assertNull(response);
 		}		
 }

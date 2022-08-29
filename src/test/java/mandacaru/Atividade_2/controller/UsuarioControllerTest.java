@@ -159,8 +159,8 @@ public class UsuarioControllerTest {
 	}
 	
 	@Test
-	public void whenFindByNameThenReturnSuccess() {
-		when(service.findByName(anyString())).thenReturn(usuario);
+	public void whenFindByEmailThenReturnSuccess() {
+		when(service.findByEmail(anyString())).thenReturn(usuario);
 
 		ResponseEntity<Usuario> response = controller.findByName(NOME);
 
@@ -179,8 +179,8 @@ public class UsuarioControllerTest {
 	}
 
 	@Test
-	public void whenFindByNameThenReturnNotFound() {
-		when(service.findByName(anyString())).thenReturn(null);
+	public void whenFindByEmailThenReturnNotFound() {
+		when(service.findByEmail(anyString())).thenReturn(null);
 
 		ResponseEntity<Usuario> response = controller.findByName(NOME);
 

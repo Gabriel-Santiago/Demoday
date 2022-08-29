@@ -118,7 +118,7 @@ tbody tr:nth-child(even) {
                     const config = {
                         headers: { Authorization: "Bearer " + localStorage.token }
                     };
-                    var URI = 'http://localhost:8080/api/imoveis'
+                    var URI = 'http://localhost:8080/api/imoveis/prontos'
                     axios.get(URI, config).then((result) => {
                         if (result.status == 401) {
                             location.replace("index.html")
