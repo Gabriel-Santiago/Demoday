@@ -21,6 +21,7 @@ public class Imagem {
 	private int id;
 	private String nome;
 	private String tipo;
+	@JsonIgnore
 	private byte[] foto;
 	
 	@ManyToOne

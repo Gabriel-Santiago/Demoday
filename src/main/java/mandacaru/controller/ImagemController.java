@@ -36,9 +36,14 @@ public class ImagemController {
     }
 	
 	@GetMapping("/imoveis/{id}/imagens") 
-	public ResponseEntity<List<Imagem>> getImageofimovel (@PathVariable("id") int id){
+	public ResponseEntity<byte[]> getImageofimovel (@PathVariable("id") int id){
 		
-		return new ResponseEntity<List<Imagem>>(service.findAllOfImovel(id), HttpStatus.OK);
+		Imagem img = service.findAllOfImovel(id);
+
+		return ResponseEntity
+                .ok()
+                .contentType(MediaType.valueOf(img.getTipo()))
+                .body(img.getFoto());
     }
 	
 	@GetMapping("/imagem/info/{id}") 
@@ -49,14 +54,11 @@ public class ImagemController {
     }
 	
 	@GetMapping("/imagem/{id}")
-    public ResponseEntity<byte[]> getImage(@PathVariable("id") int id){
+    public byte[] getImage(@PathVariable("id") int id){
 
         Imagem img = service.find(id);
 
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.valueOf(img.getTipo()))
-                .body(img.getFoto());
+        return img.getFoto();
     }
 	
 	

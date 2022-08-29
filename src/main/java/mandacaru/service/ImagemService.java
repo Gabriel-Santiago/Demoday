@@ -52,9 +52,9 @@ public class ImagemService {
 		return null;
 	}
 	
-	public List<Imagem> findAllOfImovel(int id) {
+	public Imagem findAllOfImovel(int id) {
 		
-		return imagemRepository.findByImovelId(id);
+		return imagemRepository.findFirstByImovelId(id);
 	}
 
 }

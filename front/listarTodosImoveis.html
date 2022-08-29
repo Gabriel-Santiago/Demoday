@@ -36,7 +36,7 @@ tbody tr:nth-child(even) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imóveis</title>
     <script src="https://unpkg.com/vue@2.7.7/dist/vue.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
 
 </head>
  
@@ -84,10 +84,11 @@ tbody tr:nth-child(even) {
                         <td>{{ imovel.quantidade_de_banheiros }}</td>
                         <td>{{ imovel.quantidade_de_vagas_de_garagem }}</td>
                         <td>{{ imovel.preco }}</td>
-                        <td>{{ imovel.imagens }}</td>
+                        <td><teste></teste></td>
                     </tr>
                 </tbody>
             </table>
+            
 
         </div>
         
@@ -97,20 +98,11 @@ tbody tr:nth-child(even) {
     var listaTodosImoveis = new Vue({
         el: "#listaTodosImoveis",
         data: {
-            email: "",
-            password: "",
-            token: "",
             id: 1,
-            titulo: "",
-            endereco: "",
-            metros_quadrados_de_terreno: "",
-            preco: "",
-            quantidade_de_quartos: "",
-            quantidade_de_banheiros: "",
-            quantidade_de_vagas_de_garagem: "",
-            imagens: "",
             imovel: {},
             imoveis: [],
+            imagem: {},
+            imagens: [],
             oauth: "http://localhost:8080/oauth/token"
         },
         methods: {
@@ -120,13 +112,18 @@ tbody tr:nth-child(even) {
                     };
                     var URI = 'http://localhost:8080/api/imoveis/prontos'
                     axios.get(URI, config).then((result) => {
-                        if (result.status == 401) {
-                            location.replace("index.html")
-                        }
                         this.imoveis = result.data;
                     });
                 },
         },
+        teste: function (){
+
+            return createElement('h1', "hugahuga")
+
+        },
+        components: {
+        'teste' : teste
+    }
     });
     </script>
 
