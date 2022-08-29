@@ -94,14 +94,6 @@ public class ImovelController {
         service.save(usuario_id, imovel);
     }
     
-    @Operation(summary = "teste")
-    @PostMapping(path = "/teste")
-    public String teste() throws ParseException {
-    	Pdt t = new Pdt();
-    	t.patch(t.pdtToken(), "a13565c2-0908-4dff-adb3-a5a66826bce9");
-        return "show";
-    }
-    
     @ApiResponse(responseCode = "200", description = "Updated property",
     	    content = {@Content(mediaType = "application/json", array =
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})

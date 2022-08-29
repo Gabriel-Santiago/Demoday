@@ -72,7 +72,7 @@ public class UsuarioController {
     @Operation(summary = "Get one User by name")
     @GetMapping(path = "/search")
 	public ResponseEntity<Usuario> findByName(@Parameter(description = "name of a user to be fetched from the database")  @RequestParam("nome") String nome) {
-		Usuario usuario = service.findByName(nome);
+		Usuario usuario = service.findByEmail(nome);
 		
 		if(usuario != null) {
 			return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);	

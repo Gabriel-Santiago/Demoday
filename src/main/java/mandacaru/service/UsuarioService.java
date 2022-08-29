@@ -45,11 +45,11 @@ public class UsuarioService {
 		return usuarioRepository.findAll();
 	}
 	
-	public Usuario findByName(String str) {
+	public Usuario findByEmail(String str) {
 		if (str.length() < 3) {
 			return null;
 		}
-		return usuarioRepository.findFirstByNome(str);
+		return usuarioRepository.findByEmail(str);
 	}
 
 }

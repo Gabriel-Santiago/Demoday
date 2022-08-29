@@ -212,7 +212,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/usuarios/{{id}}/imoveis",
+							"raw": "http://localhost:8080/api/usuarios/24/imoveis",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -221,7 +221,7 @@
 							"path": [
 								"api",
 								"usuarios",
-								"{{id}}",
+								"24",
 								"imoveis"
 							]
 						}
@@ -231,16 +231,6 @@
 				{
 					"name": "Get all properties",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsibWFuZGFjYXJ1Il0sInVzZXJfaWQiOi01MzM0OTE5MTYsInVzZXJfbmFtZSI6ImFkbWluIiwic2NvcGUiOlsiYXBwbGljYXRpb24iXSwiZXhwIjoxNjYxMTY5NTc3LCJhdXRob3JpdGllcyI6WyJVU0VSIiwiQURNSU4iXSwianRpIjoieVFkd05pT25hd083MXl1Q2NEWE5OLV9HbHlZIiwiY2xpZW50X2lkIjoibWFuZGFjYXJ1In0.ophE_Q7mvsR7BvJgGcGWBHBcsyTm2j1zz7Y1CAXqOlc",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -253,6 +243,27 @@
 							"path": [
 								"api",
 								"imoveis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all properties Done",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/imoveis/prontos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"imoveis",
+								"prontos"
 							]
 						}
 					},
@@ -294,7 +305,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/usuarios/{{id}}/imoveis",
+							"raw": "http://localhost:8080/api/usuarios/1/imoveis",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -303,7 +314,7 @@
 							"path": [
 								"api",
 								"usuarios",
-								"{{id}}",
+								"1",
 								"imoveis"
 							]
 						}
@@ -470,12 +481,12 @@
 			"name": "Misc",
 			"item": [
 				{
-					"name": "teste",
+					"name": "get imagem",
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/teste",
+							"raw": "http://localhost:8080/api/imagem/10",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -483,7 +494,40 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"teste"
+								"imagem",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/F:/midia/833jocbg2eh71.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/imoveis/8/imagens",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"imoveis",
+								"8",
+								"imagens"
 							]
 						}
 					},
