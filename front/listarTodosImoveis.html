@@ -83,8 +83,8 @@ tbody tr:nth-child(even) {
                         <td>{{ imovel.quantidade_de_quartos }}</td>
                         <td>{{ imovel.quantidade_de_banheiros }}</td>
                         <td>{{ imovel.quantidade_de_vagas_de_garagem }}</td>
-                        <td>{{ imovel.preco }}</td>
-                        <td><template v-for="imagem in imovel.imagens"><img src="$imagem.id" width="100" height="100"/></template></td>
+                        <td>{{ imovel.preco }}</td> 
+                        <td><img v-for="imagem in imovel.imagens" :src="img(imagem.id)" width="100" height="100"/></td>
                     </tr>
                 </tbody>
             </table>
@@ -92,7 +92,7 @@ tbody tr:nth-child(even) {
     </div>
  
     <script>
-    var listaTodosImoveis = new Vue({
+        var listaTodosImoveis = new Vue({
         el: "#listaTodosImoveis",
         data: {
             id: 1,
@@ -112,8 +112,11 @@ tbody tr:nth-child(even) {
                         this.imoveis = result.data;
                     });
                 },
+            img: function (id) {
+            return "http://localhost:8080/api/imagem/" + id;
+            }
         },
-    });
+        });
     </script>
 
 </body>
