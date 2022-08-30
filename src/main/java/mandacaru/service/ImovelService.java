@@ -95,14 +95,14 @@ public class ImovelService {
 			token = pdt.pdtToken();
 		} catch (ParseException e1) {}
 		
-//		List<Imovel> imoveis = imovelRepository.findByStatus("Pendente");
-//		
-//		for (Imovel imovel : imoveis) {
-//			try {
-//				status(imovel,pdt,token);
-//			} catch (ParseException e) {}
-//			
-//		}
+		List<Imovel> imoveis = imovelRepository.findByStatus("Pendente");
+		
+		for (Imovel imovel : imoveis) {
+			try {
+				status(imovel,pdt,token);
+			} catch (ParseException e) {}
+			
+		}
 		
 		return imovelRepository.findByStatus("Pronto");
 	}

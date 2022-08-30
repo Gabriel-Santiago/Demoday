@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<style>
+table {
+  border-collapse: collapse;
+  background-color: azure;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-transform:capitalize;
+}
+
+thead {
+  background-color: #333;
+  color: white;
+  text-transform: uppercase;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+tbody {
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  text-align: center;
+  font-size: large;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: rgb(232, 255, 255);
+}
+
+tbody tr:nth-child(even) {
+  background-color: rgb(208, 250, 250);
+}
+</style>
+ 
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem Vindo</title>
+    <script src="https://unpkg.com/vue@2.7.7/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+ 
+<body style="background-color: papayawhip;">
+ 
+  <div id="imoveis">
+
+    <h1 style="text-align:center; padding-top: 54px; font-size: 54px; color: gray; font-weight: bold;">Bem Vindo!</h1>
+
+      <div style="text-align:center; margin-top:-27px;"> 
+        
+       	<div style="display: inline-block; margin: 5px;">
+
+          <button style="background-color: green; border-color: green; width: 126px; height: 36px; margin-top: 18px;"><a href="listar_anuncios.html" style="text-decoration:none; color:white;">Listar todos os Imóveis</a></button> <br /><br />
+
+        </div>
+
+        <div style="display: inline-block; margin: 5px;">
+
+          <button style="background-color: green; border-color: green; width: 126px; height: 36px; margin-top: 18px;"><a href="cadastrar_imovel.html" style="text-decoration:none; color:white;">Cadastrar Imóvel</a></button> <br /><br />
+
+        </div>
+
+      </div>
+        <table class="table table-striped table-bordered" style="margin-left: auto; margin-right: auto;">
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Endereco</th>
+              <th>Área do terreno (m²)</th>
+              <th>Qtd de quartos</th>
+              <th>Qtd de banheiros</th>
+              <th>Vagas de garagem</th>
+              <th>Preço</th>
+              <th>Status</th>
+              <th>Fotos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="imovel in imoveis" :key="imovel.id">
+              <td>{{ imovel.titulo }}</td>
+              <td>{{ imovel.endereco }}</td>
+              <td>{{ imovel.metros_quadrados_de_terreno }}</td>
+              <td>{{ imovel.quantidade_de_quartos }}</td>
+              <td>{{ imovel.quantidade_de_banheiros }}</td>
+              <td>{{ imovel.quantidade_de_vagas_de_garagem }}</td>
+              <td>{{ imovel.preco }}</td>
+              <td>{{ imovel.status }}</td>
+              <td><img v-for="imagem in imovel.imagens" :src="img(imagem.id)" width="100" height="100"/></td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+        
+
+ 
+    <script>
+      var imoveis = new Vue({
+          el: "#imoveis",
+          data: {
+              id: 2,
+              imovel: {},
+              imoveis: [],
+          },
+          methods: {
+        	MostrarSeusImoveis: function () {
+            const config = {
+              headers: { Authorization: "Bearer " + localStorage.token }
+            };
+            var URI = 'http://localhost:8080/api/usuarios/' + this.id +'/imoveis'
+                    axios.get(URI, config).then((result) => {
+                        if (result.status == 401) {
+                            location.replace("index.html")
+                        }
+                        this.imoveis = result.data;
+                    });
+          },
+          img: function (id) {
+            return "http://localhost:8080/api/imagem/" + id;
+          }
+        },
+        beforeMount(){
+          console.log("deu")
+          this.MostrarSeusImoveis()
+        }
+      });
+    </script>
+
+</body>
+
+</html>

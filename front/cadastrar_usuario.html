@@ -29,7 +29,7 @@
 
                 <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Email:</p><input type="text" name="" id="" v-model="email" placeholder="algumacoisa@hotmail.com" /><br /><br />
 
-                <button style="background-color: darkgray; border-color: darkgray; width: 99px; height: 27px; margin-top: 18px;"><a href="index.html" style="text-decoration:none; color:white;">Voltar</a></button> <br /><br />
+                <button style="background-color: darkgray; border-color: darkgray; width: 99px; height: 27px; margin-top: 18px;"><a href="login.html" style="text-decoration:none; color:white;">Voltar</a></button> <br /><br />
 
             </div>
 
@@ -53,10 +53,6 @@
         var usuario = new Vue({
             el: "#usuario",
             data: {
-                username: "admin",
-                password: "admin",
-                token: "",
-                id: 0,
                 nome: "",
                 endereco: "",
                 telefone: "",
@@ -64,20 +60,11 @@
                 email: "",
                 senha: "",
                 baseURI: "http://localhost:8080/api/usuarios",
-                oauth: "http://localhost:8080/oauth/token"
             },
             methods: {
                 postUsuario: function () {
 
-                    var formData = new FormData();
-                    formData.append('username', this.username);
-                    formData.append('password', this.password);
-                    formData.append('grant_type', "password");
- 
-                    axios.post(this.oauth, formData, { auth: { username: 'mandacaru', password: 'senha123' } }).then((result) => {
-                        this.token = result.data.access_token;
-
-                        let obj = {
+                    let obj = {
                         nome: this.nome,
                         endereco: this.endereco,
                         telefone: this.telefone,
@@ -85,16 +72,11 @@
                         email: this.email,
                         senha: this.senha,
                         };
-
-                        const config = {
-                        headers: { Authorization: "Bearer " + this.token }
-                        };
  
-                        axios.post(this.baseURI, obj, config).then((result) => {
-                        this.usuario = result.data;
+                        axios.post(this.baseURI, obj).then((result) => {
+                            window.alert("cadastro efetuado com sucesso");
                         });
 
-                    });
 
                 },
             },

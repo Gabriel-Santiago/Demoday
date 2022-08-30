@@ -47,7 +47,7 @@
             
             <div style="display: center; margin: 5px;">
             
-            <button style="background-color: darkgray; border-color: darkgray; width: 99px; height: 27px; margin-top: 18px;"><a href="bemvindo.html" style="text-decoration:none; color:white;">Voltar</a></button>
+            <button style="background-color: darkgray; border-color: darkgray; width: 99px; height: 27px; margin-top: 18px;"><a href="bem_vindo.html" style="text-decoration:none; color:white;">Voltar</a></button>
             <button style="background-color: green; border-color: green; width: 99px; height: 27px; margin-top: 18px;" @click="postImovel"><a style="text-decoration:none; color:white;">Salvar</a></button><br /><br />
             
             </div>
@@ -60,7 +60,6 @@
         var imovel = new Vue({
             el: "#imovel",
             data: {
-                id: 1,
                 titulo: "",
                 endereco: "",
                 metros_quadrados_de_terreno: "",
@@ -71,7 +70,6 @@
                 imagens: "",                
                 imovel: {},
                 imoveis: [],
-                oauth: "http://localhost:8080/oauth/token"
             },
             methods: {
                 postImovel: function () {
@@ -93,9 +91,7 @@
                     };
                     
                     axios.post(URI, obj, config).then((result) => {                      
-                    	if (result.status == 401) {
-                            location.replace("index.html")
-                        }
+                        window.alert("cadastro efetuado com sucesso");
                     }); 
                 },
             },
