@@ -1,4 +1,4 @@
-package mandacaru;
+package mandacaru.service.util;
 
 import java.io.IOException;
 

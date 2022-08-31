@@ -8,7 +8,7 @@ import org.apache.tomcat.util.json.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import mandacaru.Pdt;
+import mandacaru.service.util.Pdt;
 import mandacaru.model.Imovel;
 import mandacaru.model.Usuario;
 import mandacaru.repository.ImovelRepository;
@@ -89,20 +89,20 @@ public class ImovelService {
 	}
 	
 	public List<Imovel> findAllDone() {
-		Pdt pdt = new Pdt();
-		String token = null;
-		try {
-			token = pdt.pdtToken();
-		} catch (ParseException e1) {}
-		
-		List<Imovel> imoveis = imovelRepository.findByStatus("Pendente");
-		
-		for (Imovel imovel : imoveis) {
-			try {
-				status(imovel,pdt,token);
-			} catch (ParseException e) {}
-			
-		}
+//		Pdt pdt = new Pdt();
+//		String token = null;
+//		try {
+//			token = pdt.pdtToken();
+//		} catch (ParseException e1) {}
+//		
+//		List<Imovel> imoveis = imovelRepository.findByStatus("Pendente");
+//		
+//		for (Imovel imovel : imoveis) {
+//			try {
+//				status(imovel,pdt,token);
+//			} catch (ParseException e) {}
+//			
+//		}
 		
 		return imovelRepository.findByStatus("Pronto");
 	}

@@ -38,8 +38,6 @@
             data: {
                 email: "",
                 password: "",
-                token: "",
-                oauth: "http://localhost:8080/oauth/token"
             },
             methods: {
                 login: function () {
@@ -47,16 +45,21 @@
                     formData.append('username', this.email);
                     formData.append('password', this.password);
                     formData.append('grant_type', "password");
- 
-                    axios.post(this.oauth, formData, { auth: { username: 'mandacaru', password: 'senha123' } }).then((result) => {
 
-                        this.token = result.data.access_token;
-                        localStorage.token = this.token;
-                        if (result.status == 200) {
+                    axios.post("http://localhost:8080/oauth/token", formData, { auth: { username: 'mandacaru', password: 'senha123' } }).then((result) => {
+
+                        localStorage.token = result.data.access_token;
+                        const config = {
+                        headers: { Authorization: "Bearer " + localStorage.token }
+                        };
+
+                        axios.get("http://localhost:8080/api/usuarios/search?nome=" + this.email, config).then((result) => {
+                            localStorage.id = result.data.id
+                            if (result.status == 200) {
                             location.replace("bem_vindo.html")
-                        }
+                            }
+                        });
                     });
-                    
                 },
             },
         });
