@@ -108,7 +108,7 @@ public class Pdt {
     			+ "\"email\":\"caneiroassado@gmail.com\","
     			+ "\"documentType\":\"CPF\","
     			+ "\"documentCode\":\"012.345.678-99\","
-    			+ "\"actionType\":{\"id\":\"495c75cc-1620-4cb7-a225-ff8e93862394\"},"
+    			+ "\"actionType\":{\"id\":\"510b226e-c705-4120-ad9d-4a19633ea3df\"},"
     			+ "\"responsibility\":{\"id\":\"495c75cc-1620-4cb7-a225-ff8e93862394\"},"
     			+ "\"authenticationType\":{\"id\":\"841c8833-8566-4a9a-be5b-b30839ed138d\"},"
     			+ "\"order\":1,"

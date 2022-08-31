@@ -37,7 +37,7 @@ public class ImovelService {
 		imovelRepository.save(entity);				
 	}
 	
-	public void save(int usuario_id, Imovel entity) throws ParseException, IOException {
+	public String save(int usuario_id, Imovel entity) throws ParseException, IOException {
 		Pdt pdt = new Pdt();
 		String token = pdt.pdtToken();
     	String processId = pdt.pdtProcess(token);
@@ -60,7 +60,9 @@ public class ImovelService {
     	
 		entity.setProcesso(processId);
 		entity.setStatus("Pendente");
-		imovelRepository.save(entity);				
+		entity = imovelRepository.save(entity);
+		imovelRepository.flush();
+		return Integer.toString(entity.getId());
 	}
 
 	public void delete(int id) {
@@ -81,6 +83,20 @@ public class ImovelService {
 	}
 
 	public List<Imovel> findAllOfUser(int usuario_id) {
+		Pdt pdt = new Pdt();
+		String token = null;
+		try {
+			token = pdt.pdtToken();
+		} catch (ParseException e) {}
+		
+		List<Imovel> imoveis = imovelRepository.findByUsuarioId(usuario_id);
+		
+		for (Imovel imovel : imoveis) {
+			try {
+				status(imovel,pdt,token);
+			} catch (ParseException e) {}
+			
+		}
 		return imovelRepository.findByUsuarioId(usuario_id);
 	}
 	
@@ -89,20 +105,7 @@ public class ImovelService {
 	}
 	
 	public List<Imovel> findAllDone() {
-//		Pdt pdt = new Pdt();
-//		String token = null;
-//		try {
-//			token = pdt.pdtToken();
-//		} catch (ParseException e1) {}
-//		
-//		List<Imovel> imoveis = imovelRepository.findByStatus("Pendente");
-//		
-//		for (Imovel imovel : imoveis) {
-//			try {
-//				status(imovel,pdt,token);
-//			} catch (ParseException e) {}
-//			
-//		}
+		
 		
 		return imovelRepository.findByStatus("Pronto");
 	}

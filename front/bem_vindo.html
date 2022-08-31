@@ -103,7 +103,6 @@ tbody tr:nth-child(even) {
       var imoveis = new Vue({
           el: "#imoveis",
           data: {
-              id: 2,
               imovel: {},
               imoveis: [],
           },
@@ -112,11 +111,8 @@ tbody tr:nth-child(even) {
             const config = {
               headers: { Authorization: "Bearer " + localStorage.token }
             };
-            var URI = 'http://localhost:8080/api/usuarios/' + this.id +'/imoveis'
+            var URI = 'http://localhost:8080/api/usuarios/' + localStorage.id +'/imoveis'
                     axios.get(URI, config).then((result) => {
-                        if (result.status == 401) {
-                            location.replace("index.html")
-                        }
                         this.imoveis = result.data;
                     });
           },

@@ -23,25 +23,25 @@
 
             <div style="display: inline-block; margin: 5px;">
 
-                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px;">Título:</p><input type="text" name="" id="" v-model="titulo" placeholder="Casa, Mansão, Ap..." /><br /><br />
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px;">Título:</p><input type="text" v-model="titulo" placeholder="Casa, Mansão, Ap..." /><br /><br />
 
-                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Área do terreno (m²)</p><input type="number" name="" id="" v-model="metros_quadrados_de_terreno" placeholder="96.30"  min="0" step=".01" /><br /><br />
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Área do terreno (m²)</p><input type="number" v-model="metros_quadrados_de_terreno" placeholder="96.30"  min="0" step=".01" /><br /><br />
 
-                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Total de Quartos:</p><input type="number" name="" id="" v-model="quantidade_de_quartos" placeholder="2" min="0" /><br  /><br />
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Total de Quartos:</p><input type="number" v-model="quantidade_de_quartos" placeholder="2" min="0" /><br  /><br />
 
-                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Vagas de Garagem:</p><input type="number" name="" id="" v-model="quantidade_de_vagas_de_garagem" placeholder="1"  min="0" /><br /><br />
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Vagas de Garagem:</p><input type="number" v-model="quantidade_de_vagas_de_garagem" placeholder="1"  min="0" /><br /><br />
 
             </div>
 
             <div style="display: inline-block; margin: 5px;">
 
-                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; ">Endereço:</p><input type="text" name="" id="" v-model="endereco" placeholder="Rua, Av..." /><br /><br /> 
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; ">Endereço:</p><input type="text"  v-model="endereco" placeholder="Rua, Av..." /><br /><br /> 
 
-                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Preço</p><input type="number" name="" id="" v-model="preco" placeholder="120330.99"  min="0" step=".01" /><br /><br />
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Preço</p><input type="number" v-model="preco" placeholder="120330.99"  min="0" step=".01" /><br /><br />
 
-                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Total de Banheiros:</p><input type="number" name="" id="" v-model="quantidade_de_banheiros" placeholder="1"  min="0" /><br /><br />
+                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Total de Banheiros:</p><input type="number" v-model="quantidade_de_banheiros" placeholder="1"  min="0" /><br /><br />
 
-				<p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Imagem:</p><button style="border:none; background:none"><input type="file" v-model="imagens" accept="image/*" id="file" name="file"></button><br /><br />
+				<p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Imagem:</p><button style="border:none; background:none"><input type="file" @change="previewFiles" accept="image/*" id="file" name="file" ref="myFiles" multiple></button><br /><br />
 
             </div>
             
@@ -60,14 +60,14 @@
         var imovel = new Vue({
             el: "#imovel",
             data: {
+                id: "",
                 titulo: "",
                 endereco: "",
                 metros_quadrados_de_terreno: "",
                 preco: "",
                 quantidade_de_quartos: "",
                 quantidade_de_banheiros: "",
-                quantidade_de_vagas_de_garagem: "",
-                imagens: [],                
+                quantidade_de_vagas_de_garagem: ""           
             },
             methods: {
                 postImovel: function () {
@@ -88,10 +88,25 @@
                         imagens: this.imagens,
                     };
                     
-                    axios.post(URI, obj, config).then((result) => {                      
-                        window.alert("cadastro efetuado com sucesso");
+                    axios.post(URI, obj, config).then((result) => {   
+                        this.id = result.data    
+                        console.log(result.data);
+
+                        var formData = new FormData();
+                        for (let file of this.$refs.myFiles.files) {
+                            formData.append("files", file);
+                        }
+                        axios.post("http://localhost:8080/api/imoveis/" + this.id + "/imagens",formData, config).then((result) => {
+
+                            console.log("deu");
+
+                        }) 
                     }); 
+                    
                 },
+                previewFiles(event) {
+                    console.log(this.$refs.myFiles.files);
+                }
             },
         });
     </script>

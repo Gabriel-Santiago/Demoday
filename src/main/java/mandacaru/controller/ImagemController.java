@@ -1,6 +1,9 @@
 package mandacaru.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -24,13 +27,18 @@ public class ImagemController {
     ImagemService service;
 
 	@PostMapping("/imoveis/{id}/imagens") 
-	public void uploadImage(@PathVariable("id") int id,@RequestParam("file") MultipartFile file) throws IOException {
+	public void uploadImage(@PathVariable("id") int id,@RequestParam("files") MultipartFile[] files) throws IOException {
 		
-		Imagem teste = new Imagem();
-		teste.setFoto(file.getBytes());
-		teste.setTipo(file.getContentType());
-		
-		service.save(teste, id);
+	    Arrays.asList(files).stream().forEach(file -> {
+	    	Imagem teste = new Imagem();
+			try {
+				teste.setFoto(file.getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			teste.setTipo(file.getContentType());
+			service.save(teste, id);
+	    });
     }
 	
 	@GetMapping("/imagem/info/{id}") 

@@ -3,14 +3,12 @@
 
 ### Ultimas Mudanças
 
-- agora usando RDS da amazon pra evitar as quedas do heroku
-- imovel e dono model pequeno update
-- pasta front e postman atualizado
+- Tudo funciona agora
 
 ### Metas
 - [X] Seguraça
-- [ ] PDTsing
-- [ ] Front
+- [X] PDTsing
+- [X] Front
 - [X] CRUD Postman
 - [X] Teste
 	- [X] Controller

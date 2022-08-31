@@ -88,9 +88,9 @@ public class ImovelController {
 			content = @Content)
     @Operation(summary = "Save the property")
     @PostMapping(path = "/usuarios/{id}/imoveis")
-    public void save(@Parameter(description = "id of a user to be fetched from the database")  @PathVariable("id") int usuario_id,@RequestBody Imovel imovel) throws ParseException, IOException, InterruptedException {
+    public String save(@Parameter(description = "id of a user to be fetched from the database")  @PathVariable("id") int usuario_id,@RequestBody Imovel imovel) throws ParseException, IOException, InterruptedException {
     		
-        service.save(usuario_id, imovel);
+        return service.save(usuario_id, imovel);
     }
     
     @ApiResponse(responseCode = "200", description = "Updated property",
