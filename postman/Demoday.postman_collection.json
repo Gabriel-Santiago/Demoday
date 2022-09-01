@@ -405,6 +405,85 @@
 			]
 		},
 		{
+			"name": "imagens",
+			"item": [
+				{
+					"name": "get imagem",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/imagem/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"imagem",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/F:/midia/833jocbg2eh71.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/imoveis/8/imagens",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"imoveis",
+								"8",
+								"imagens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete image",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/imagem/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"imagem",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Segurança",
 			"item": [
 				{
@@ -470,64 +549,6 @@
 							"path": [
 								"oauth",
 								"token"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Misc",
-			"item": [
-				{
-					"name": "get imagem",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/imagem/10",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"imagem",
-								"10"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "post image",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "file",
-									"type": "file",
-									"src": "/F:/midia/833jocbg2eh71.png"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/imoveis/8/imagens",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"imoveis",
-								"8",
-								"imagens"
 							]
 						}
 					},
