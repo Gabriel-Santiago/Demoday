@@ -1,9 +1,13 @@
 # DEMODAY
-![](https://img.shields.io/github/last-commit/Gabriel-Santiago/Mandacaru_Desafio3?label=ultimo%20commit&style=flat) ![](https://img.shields.io/badge/status-incompleto-red.svg)
+![](https://mandacaru.dev/img/logo.png)
+![](https://img.shields.io/badge/status-completo-success.svg)
+![](https://img.shields.io/badge/SPRING-1f8f00?style=flat-square&logo=spring) ![](https://img.shields.io/badge/AWS-ffa600?style=flat-square&logo=amazonaws) ![](https://img.shields.io/badge/VUE-055235?style=flat-square&logo=vue.js)
+
+## Descrição
 
 ### Ultimas Mudanças
 
-- Tudo funciona agora
+- Polimento do codigo
 
 ### Metas
 - [X] Seguraça

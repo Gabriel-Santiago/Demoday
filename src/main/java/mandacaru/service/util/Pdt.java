@@ -27,7 +27,7 @@ public class Pdt {
 	
 	// requisão de token da api da pdt sing
 	
-    public String pdtToken() throws ParseException{
+    public String Token() throws ParseException{
     	
     	String uri = "https://h-auth.portaldedocumentos.com.br/auth/realms/assinador/protocol/openid-connect/token";
     	
@@ -45,7 +45,7 @@ public class Pdt {
     
     // requisão do id do processo da pdt sing
     
-    public String pdtProcess(String token) throws ParseException{
+    public String createProcess(String token) throws ParseException{
     	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes";
     	
     	String jsontext = 
@@ -131,7 +131,7 @@ public class Pdt {
     
     // requisão do id do documento da pdt sing
     
-    public String pdtDocument(String token, String processId) throws ParseException{
+    public String createDocument(String token, String processId) throws ParseException{
     	
     	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId +"/documents";
     	
@@ -159,7 +159,7 @@ public class Pdt {
     
     // upload de documento do processo
     
-    public void pdtUpDocument(String token, String processId, String documentId,byte[] pdf) throws ParseException, IOException{
+    public void UpDocument(String token, String processId, String documentId,byte[] pdf) throws ParseException, IOException{
     	
     	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId + "/documents/" + documentId +"/upload";
     	
@@ -194,7 +194,7 @@ public class Pdt {
     	
     }
     
-    // bota o processo pra rodar, não testado
+    // bota o processo pra rodar
     
     public void patch(String token, String processId) throws ParseException{
     	
@@ -225,7 +225,7 @@ public class Pdt {
     
     // retorna o status do processo
     
-    public String pdtCheckDocument(String token, String processId, String documentId) throws ParseException{
+    public String CheckDocument(String token, String processId, String documentId) throws ParseException{
     	
     	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId +"/documents/" + documentId;
     	
@@ -246,7 +246,7 @@ public class Pdt {
     	return jsonObject.get("status").getAsString();
     }
     
-    public String pdtCheckProcess(String token, String processId) throws ParseException{
+    public String CheckProcess(String token, String processId) throws ParseException{
     	
     	String uri = "https://esign-api-pprd.portaldedocumentos.com.br/processes/" + processId ;
     	

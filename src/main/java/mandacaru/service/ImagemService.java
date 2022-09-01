@@ -21,18 +21,18 @@ public class ImagemService {
 	@Autowired
 	ImovelRepository imovelRepository;
 	
+	// relacionado save
+	
 	public void save(Imagem entity,int imovel_id) {
 		Imovel imovel = imovelRepository.findById(imovel_id).get();
-		entity.setNome(imovel.getTitulo() + Timestamp.from(Instant.now()));
+		entity.setNome(imovel.getTitulo() + " " + Timestamp.from(Instant.now()));
 		entity.setImovel(imovel);
 		imagemRepository.save(entity);
 	}
 
-	public void delete(int id) {
-		Imagem imagem = find(id);
-		imagemRepository.delete(imagem);
-	}
 
+	// relacionado find
+	
 	public Imagem find(int id) {
 		if (id < 1) {
 			return null;
@@ -43,6 +43,13 @@ public class ImagemService {
 			return imagem.get();
 		}
 		return null;
+	}
+	
+	// relacionado delete
+
+	public void delete(int id) {
+		Imagem imagem = find(id);
+		imagemRepository.delete(imagem);
 	}
 
 }

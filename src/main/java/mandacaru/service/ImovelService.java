@@ -23,34 +23,23 @@ public class ImovelService {
 	
 	@Autowired
 	UsuarioRepository usuarioRepository;
-
-	public void update(int id, Imovel entity) {
-		Imovel imovel = find(id);		
-		imovel.setTitulo(entity.getTitulo());
-		imovelRepository.save(imovel);				
-	}
 	
-	public void status(Imovel entity, Pdt pdt, String token) throws ParseException {
-		if(pdt.pdtCheckProcess(token, entity.getProcesso()).equals("DONE")) {
-			entity.setStatus("Pronto");
-		}
-		imovelRepository.save(entity);				
-	}
+	// relacionado save
 	
 	public String save(int usuario_id, Imovel entity) throws ParseException, IOException {
 		Pdt pdt = new Pdt();
-		String token = pdt.pdtToken();
-    	String processId = pdt.pdtProcess(token);
-    	String documentId = pdt.pdtDocument(token, processId);
+		String token = pdt.Token();
+    	String processId = pdt.createProcess(token);
+    	String documentId = pdt.createDocument(token, processId);
     	Usuario usuario = usuarioRepository.findById(usuario_id).get();
     	
     	entity.setUsuario(usuario);    	
 
-    	pdt.pdtUpDocument(token, processId, documentId,new PdfGenerator().criarPdf(entity));
+    	pdt.UpDocument(token, processId, documentId,new PdfGenerator().criarPdf(entity));
     	
-    	while(!pdt.pdtCheckDocument(token, processId, documentId).equals("DONE")) {
+    	while(!pdt.CheckDocument(token, processId, documentId).equals("DONE")) {
     		try {
-    		    Thread.sleep(1 * 1000);
+    		    Thread.sleep(1000);
     		} catch (InterruptedException ie) {
     		    Thread.currentThread().interrupt();
     		}
@@ -64,11 +53,23 @@ public class ImovelService {
 		imovelRepository.flush();
 		return Integer.toString(entity.getId());
 	}
+	
+	// relacionado update
 
-	public void delete(int id) {
-		Imovel imovel = find(id);
-		imovelRepository.delete(imovel);
+	public void update(int id, Imovel entity) {
+		Imovel imovel = find(id);		
+		imovel.setTitulo(entity.getTitulo());
+		imovelRepository.save(imovel);				
 	}
+	
+	public void status(Imovel entity, Pdt pdt, String token) throws ParseException {
+		if(pdt.CheckProcess(token, entity.getProcesso()).equals("DONE")) {
+			entity.setStatus("Pronto");
+		}
+		imovelRepository.save(entity);				
+	}
+	
+	// relacionado find
 
 	public Imovel find(int id) {
 		if (id < 1) {
@@ -86,7 +87,7 @@ public class ImovelService {
 		Pdt pdt = new Pdt();
 		String token = null;
 		try {
-			token = pdt.pdtToken();
+			token = pdt.Token();
 		} catch (ParseException e) {}
 		
 		List<Imovel> imoveis = imovelRepository.findByUsuarioId(usuario_id);
@@ -105,8 +106,14 @@ public class ImovelService {
 	}
 	
 	public List<Imovel> findAllDone() {
-		
-		
 		return imovelRepository.findByStatus("Pronto");
 	}
+	
+	// relacionado delete
+	
+	public void delete(int id) {
+		Imovel imovel = find(id);
+		imovelRepository.delete(imovel);
+	}
+
 }

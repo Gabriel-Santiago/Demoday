@@ -36,6 +36,8 @@ public class UsuarioController {
     @Autowired
     UsuarioService service;
  
+    // Get
+    
     @Operation(summary = "Get all Users")
     @ApiResponse(responseCode = "200", description = "Found the users",
 	    content = {@Content(mediaType = "application/json", array =
@@ -81,7 +83,7 @@ public class UsuarioController {
 		}
 	}
     
-    //
+    // Post
     
     @ApiResponse(responseCode = "200", description ="Added a new user",
     	    content = {@Content(mediaType = "application/json", array =
@@ -94,7 +96,7 @@ public class UsuarioController {
         service.save(0, usuario);
     }
     
-    //
+    // Put
     
     @ApiResponse(responseCode = "200", description ="Updated a user",
     	    content = {@Content(mediaType = "application/json", array =
@@ -107,7 +109,7 @@ public class UsuarioController {
         service.save(id, usuario);
     }
     
-    //
+    // Delete
     
     @ApiResponse(responseCode = "200", description ="Deleted a user",
     	    content = {@Content(mediaType = "application/json", array =

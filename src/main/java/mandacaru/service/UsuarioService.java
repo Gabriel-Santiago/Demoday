@@ -15,6 +15,8 @@ public class UsuarioService {
 
 	@Autowired
 	UsuarioRepository usuarioRepository;
+	
+	// relacionado save
 
 	public void save(int id, Usuario entity) {
 		if(id != 0) {
@@ -23,11 +25,8 @@ public class UsuarioService {
 		entity.setSenha(new BCryptPasswordEncoder().encode(entity.getSenha()));
 		usuarioRepository.save(entity);
 	}
-
-	public void delete(int id) {
-		Usuario usuario = find(id);
-		usuarioRepository.delete(usuario);
-	}
+	
+	// relacionado find
 
 	public Usuario find(int id) {
 		if (id < 1) {
@@ -50,6 +49,13 @@ public class UsuarioService {
 			return null;
 		}
 		return usuarioRepository.findByEmail(str);
+	}
+	
+	// relacionado delete
+	
+	public void delete(int id) {
+		Usuario usuario = find(id);
+		usuarioRepository.delete(usuario);
 	}
 
 }
