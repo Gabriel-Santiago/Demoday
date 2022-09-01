@@ -20,12 +20,6 @@ public class ImagemService {
 	
 	@Autowired
 	ImovelRepository imovelRepository;
-
-	public void update(int id, Imovel entity) {
-		Imagem imagem = find(id);		
-		imagem.setNome(entity.getTitulo());
-		imagemRepository.save(imagem);
-	}
 	
 	public void save(Imagem entity,int imovel_id) {
 		Imovel imovel = imovelRepository.findById(imovel_id).get();
@@ -49,11 +43,6 @@ public class ImagemService {
 			return imagem.get();
 		}
 		return null;
-	}
-	
-	public Imagem findAllOfImovel(int id) {
-		
-		return imagemRepository.findFirstByImovelId(id);
 	}
 
 }

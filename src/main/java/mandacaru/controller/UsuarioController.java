@@ -69,10 +69,10 @@ public class UsuarioController {
     @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
     @ApiResponse(responseCode = "404", description = "Not Found this user",
     content = @Content)
-    @Operation(summary = "Get one User by name")
+    @Operation(summary = "Get one User by email")
     @GetMapping(path = "/search")
-	public ResponseEntity<Usuario> findByName(@Parameter(description = "name of a user to be fetched from the database")  @RequestParam("nome") String nome) {
-		Usuario usuario = service.findByEmail(nome);
+	public ResponseEntity<Usuario> findByName(@Parameter(description = "email of a user to be fetched from the database")  @RequestParam("nome") String email) {
+		Usuario usuario = service.findByEmail(email);
 		
 		if(usuario != null) {
 			return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);	

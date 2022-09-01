@@ -37,6 +37,8 @@ public class ImovelController {
     @Autowired
     ImovelService service;
     
+    // Get
+    
     @ApiResponse(responseCode = "200", description ="Find all user properties",
     	    content = {@Content(mediaType = "application/json", array =
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
@@ -79,6 +81,8 @@ public class ImovelController {
         return new ResponseEntity<List<Imovel>>(service.findAllDone(), HttpStatus.OK);
     }
     
+    // Post
+    
     @ApiResponse(responseCode = "200", description = "User-added property",
     	    content = {@Content(mediaType = "application/json", array =
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
@@ -93,6 +97,8 @@ public class ImovelController {
         return service.save(usuario_id, imovel);
     }
     
+    // Put
+    
     @ApiResponse(responseCode = "200", description = "Updated property",
     	    content = {@Content(mediaType = "application/json", array =
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
@@ -106,6 +112,8 @@ public class ImovelController {
         service.update(id, imovel);
     }
  
+    // Delete
+    
     @ApiResponse(responseCode = "200", description = "Property deleted",
     		content = {@Content(mediaType = "application/json", array =
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})

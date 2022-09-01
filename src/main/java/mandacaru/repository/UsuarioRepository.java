@@ -8,7 +8,5 @@ import mandacaru.model.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
-	Usuario findFirstByNome(String nome);
-
 	Usuario findByEmail(String email);
 }
