@@ -39,8 +39,7 @@ public class ImovelControllerTest {
 	private static final String STATUS = "Pendente";
 	private static final String PROCESSO = "sjvapoofa7v7ev498v48r4ve98f4";
 	private Usuario usuario;
-	
-	
+
 	
 	// Imagens
 	private static final int ID_1 = 1;
@@ -81,7 +80,7 @@ public class ImovelControllerTest {
 	@Test
 	public void whenFindByIdThenReturnSuccess() {
 		when(service.find(anyInt())).thenReturn(imovel);
-
+		
 		ResponseEntity<Imovel> response = controller.find(ID);
 		assertNotNull(response);
 		assertNotNull(response.getBody());

@@ -93,9 +93,8 @@ public class ImovelController {
     @Operation(summary = "Save the property")
     @PostMapping(path = "/usuarios/{id}/imoveis")
     public String save(@Parameter(description = "id of a user to be fetched from the database")  @PathVariable("id") int usuario_id,@RequestBody Imovel imovel) throws ParseException, IOException, InterruptedException {
-    		
         return service.save(usuario_id, imovel);
-    }
+        }
     
     // Put
     
