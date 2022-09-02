@@ -3,6 +3,7 @@ package mandacaru.controller;
 import java.io.IOException;
 import java.util.Arrays;
 
+import org.apache.http.client.methods.HttpPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +16,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import mandacaru.model.Imagem;
 import mandacaru.service.ImagemService;
 
+@Tag(name = "Imagens")
 @RestController
 @RequestMapping(path = "/api")
+@SecurityRequirement(name = "oauth")
 public class ImagemController {
 	
 	@Autowired
@@ -27,6 +37,10 @@ public class ImagemController {
 	
 	// Get
 	
+	@ApiResponse(responseCode = "200", description ="Returned data from an image",
+    	    content = {@Content(mediaType = "application/json", array =
+    	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
+    @Operation(summary = "find an image ")
 	@GetMapping("/imagem/info/{id}") 
 	public Imagem getImageInfo(@PathVariable("id") int id) {
 		
@@ -34,6 +48,10 @@ public class ImagemController {
         
     }
 	
+	@ApiResponse(responseCode = "200", description ="Found an image with the given id",
+    	    content = {@Content(mediaType = "application/json", array =
+    	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
+    @Operation(summary = "find an image ")
 	@GetMapping("/imagem/{id}")
     public ResponseEntity<byte[]> getImage(@PathVariable("id") int id){
 
@@ -47,6 +65,10 @@ public class ImagemController {
     
     // Post
     
+    @ApiResponse(responseCode = "200", description ="Image upload done",
+    	    content = {@Content(mediaType = "application/json", array =
+    	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
+    @Operation(summary = "Upload an image ")
 	@PostMapping("/imoveis/{id}/imagens") 
 	public void uploadImage(@PathVariable("id") int id,@RequestParam("files") MultipartFile[] files) throws IOException {
 		
@@ -66,6 +88,10 @@ public class ImagemController {
 	
 	// Delete
 	
+    @ApiResponse(responseCode = "200", description ="Image Deleted",
+    	    content = {@Content(mediaType = "application/json", array =
+    	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
+    @Operation(summary = "Delete an image ")
 	@DeleteMapping("/imagens/{id}")
 	public void deleteImage(@PathVariable("id") int id) {
 		service.delete(id);
