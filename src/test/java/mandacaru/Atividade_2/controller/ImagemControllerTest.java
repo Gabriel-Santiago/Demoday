@@ -17,7 +17,7 @@ import mandacaru.controller.ImagemController;
 import mandacaru.model.Imagem;
 import mandacaru.service.ImagemService;
 
-public class ImagemControllerTest {
+public class ImagemControllerTest { 
 	
 	// Imagens
 	private static final int ID = 1;

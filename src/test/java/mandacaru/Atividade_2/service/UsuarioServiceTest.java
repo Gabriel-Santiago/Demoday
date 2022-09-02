@@ -81,7 +81,7 @@ public class UsuarioServiceTest {
 		}
 		
 		@Test
-		public void whenFindByIdThenReturnAProduct() {
+		public void whenFindByIdThenReturnAnUser() {
 			when(repository.findById(anyInt())).thenReturn(Optional.of(usuario));
 
 			Usuario response = service.find(ID);
@@ -132,6 +132,13 @@ public class UsuarioServiceTest {
 		}
 		
 		@Test
+		public void whenFindByEmailThenReturnAnUser() {
+			when(repository.findByEmail(EMAIL)).thenReturn(usuario);
+			service.findByEmail(EMAIL);
+			verify(repository).findByEmail(EMAIL);
+		}
+		
+		@Test
 		public void whenSaveVerifySuccess() {
 			when(repository.save(any())).thenReturn(usuario);
 			service.save(0, usuario);
@@ -142,7 +149,7 @@ public class UsuarioServiceTest {
 		public void whenUpdateVerifySuccess() {
 			when(repository.save(any())).thenReturn(usuario);
 			service.save(1, usuario);
-			verify(repository).save(any());
+			verify(repository).save(any()); 
 		}
 		
 		@Test

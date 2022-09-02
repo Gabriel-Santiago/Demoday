@@ -2,6 +2,7 @@ package mandacaru.service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import mandacaru.repository.ImagemRepository;
 import mandacaru.repository.ImovelRepository;
 
 @Service
-public class ImagemService {
+public class ImagemService { 
 
 	@Autowired
 	ImagemRepository imagemRepository;
@@ -43,6 +44,10 @@ public class ImagemService {
 			return imagem.get();
 		}
 		return null;
+	}
+	
+	public List<Imagem> findAll() {
+		return imagemRepository.findAll();
 	}
 	
 	// relacionado delete

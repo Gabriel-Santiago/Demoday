@@ -11,7 +11,7 @@ import mandacaru.model.Usuario;
 import mandacaru.repository.UsuarioRepository;
 
 @Service
-public class UsuarioService {
+public class UsuarioService { 
 
 	@Autowired
 	UsuarioRepository usuarioRepository;
@@ -45,9 +45,6 @@ public class UsuarioService {
 	}
 	
 	public Usuario findByEmail(String str) {
-		if (str.length() < 3) {
-			return null;
-		}
 		return usuarioRepository.findByEmail(str);
 	}
 	

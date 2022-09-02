@@ -57,7 +57,7 @@ public class ImovelService {
 	// relacionado update
 
 	public void update(int id, Imovel entity) {
-		Imovel imovel = find(id);		
+		Imovel imovel = find(id);	
 		imovel.setTitulo(entity.getTitulo());
 		imovelRepository.save(imovel);				
 	}
