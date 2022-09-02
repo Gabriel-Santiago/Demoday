@@ -103,6 +103,13 @@ public class ImovelControllerTest {
 	}
 	
 	@Test
+	public void whenCreateThenReturnSuccess() throws ParseException, IOException, InterruptedException {
+		controller.save(0,imovel);
+
+		verify(service).save(0, imovel);
+	}
+	
+	@Test
 	public void whenFindByIdThenReturnNotFound() {
 		when(service.find(anyInt())).thenReturn(null);
 

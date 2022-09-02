@@ -7,11 +7,24 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import mandacaru.controller.ImagemController;
 import mandacaru.model.Imagem;
@@ -22,7 +35,7 @@ public class ImagemControllerTest {
 	// Imagens
 	private static final int ID = 1;
 	private static final String NOME = "Teste";
-	private static final String TIPO = "Png";
+	private static final String TIPO = MediaType.IMAGE_PNG_VALUE;
 	private static final byte[] FOTO = null;
 
 	@InjectMocks
@@ -59,6 +72,28 @@ public class ImagemControllerTest {
 		assertEquals(NOME, response.getNome());
 		assertEquals(TIPO, response.getTipo());
 		assertEquals(FOTO, response.getFoto());
+	}
+	
+	@Test
+	public void whenGetImageThenReturnSuccess() {
+		when(service.find(anyInt())).thenReturn(imagem);
+
+		ResponseEntity<byte[]> response = controller.getImage(ID);
+		assertNotNull(response);
+		assertEquals(FOTO, response.getBody());
+	}
+	
+	@Test
+	public void whenUploadImageThenReturnSuccess() throws IOException {		
+		doNothing().when(service).save(imagem, 0);
+		
+		MultipartFile[] file = new MultipartFile[1];
+		byte[] b = new byte[1];
+		file[0] = new MockMultipartFile("fileItem","teste", "image/png", b);
+		
+		controller.uploadImage(ID, file);
+		
+		
 	}
 	
 	@Test

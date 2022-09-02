@@ -9,10 +9,12 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.tomcat.util.json.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,6 +25,7 @@ import mandacaru.model.Imagem;
 import mandacaru.model.Imovel;
 import mandacaru.model.Usuario;
 import mandacaru.repository.ImovelRepository;
+import mandacaru.repository.UsuarioRepository;
 import mandacaru.service.ImovelService;
 
 public class ImovelServiceTest {
@@ -49,6 +52,9 @@ public class ImovelServiceTest {
 	
 	@Mock
 	private ImovelRepository repository;
+	
+	@Mock
+	private UsuarioRepository usuariosRepository;
 	
 	private Imovel imovel;
 	
@@ -95,6 +101,15 @@ public class ImovelServiceTest {
 		assertEquals(listImagem, response.get(0).getImagens());
 		assertEquals(USUARIO, response.get(0).getUsuario());
 	}
+	
+	@Test
+	public void whenFindAllOfUserThenReturnAnList() {
+		when(repository.findAll()).thenReturn(List.of(imovel));
+
+		List<Imovel> response = service.findAllOfUser(1);
+
+		assertNotNull(response);
+	}
 
 	@Test
 	public void whenFindAllDoneThenReturnAnList() {
@@ -123,6 +138,21 @@ public class ImovelServiceTest {
 
 		assertNull(response);
 	}
+	
+	@Test
+	public void whenSaveVerifySuccess() throws ParseException, IOException {
+		when(repository.save(any())).thenReturn(imovel);
+		service.save(1, imovel);
+		verify(repository).save(any());
+	}
+	
+	@Test
+	public void whenUpdateVerifySuccess() throws ParseException, IOException {
+		when(repository.save(any())).thenReturn(imovel);
+		service.update(ID, imovel);;
+		verify(repository).save(any()); 
+	}
+	
 
 	@Test
 	public void whenFindByIdThenReturnNullIfOptionalNotPresent() {

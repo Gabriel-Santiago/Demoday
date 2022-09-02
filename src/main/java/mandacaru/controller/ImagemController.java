@@ -74,10 +74,11 @@ public class ImagemController {
 		
 	    Arrays.asList(files).stream().forEach(file -> {
 	    	Imagem teste = new Imagem();
-	    	
+
 			try {
 				teste.setFoto(file.getBytes());
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

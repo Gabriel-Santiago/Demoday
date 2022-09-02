@@ -56,10 +56,9 @@ public class ImovelService {
 	
 	// relacionado update
 
-	public void update(int id, Imovel entity) {
-		Imovel imovel = find(id);	
-		imovel.setTitulo(entity.getTitulo());
-		imovelRepository.save(imovel);				
+	public void update(int id, Imovel entity) {	
+		entity.setId(id);
+		imovelRepository.save(entity);				
 	}
 	
 	public void status(Imovel entity, Pdt pdt, String token) throws ParseException {
