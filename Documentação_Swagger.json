@@ -1,0 +1,781 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Demoday API
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /api/usuarios/{id}:
+    get:
+      tags:
+        - Usuario
+      summary: Get one User by ID
+      operationId: find
+      parameters:
+        - name: id
+          in: path
+          description: id of a user to be fetched from the database
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Found the user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+        '404':
+          description: Not Found this user
+      security:
+        - oauth: []
+    put:
+      tags:
+        - Usuario
+      summary: Uptade one user
+      operationId: update
+      parameters:
+        - name: id
+          in: path
+          description: id of a user to be fetched from the database
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+        required: true
+      responses:
+        '200':
+          description: Updated a user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+        '500':
+          description: An exception was generated
+      security:
+        - oauth: []
+    delete:
+      tags:
+        - Usuario
+      summary: Delete one user
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          description: id of a user to be fetched from the database
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Deleted a user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+        '500':
+          description: An exception was generated
+      security:
+        - oauth: []
+  /api/imoveis/{id}:
+    get:
+      tags:
+        - Imovel
+      summary: Find property by ID
+      operationId: find_1
+      parameters:
+        - name: id
+          in: path
+          description: id of a propertie to be fetched from the database
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Found the propertie
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+        '404':
+          description: property not found
+      security:
+        - oauth: []
+    put:
+      tags:
+        - Imovel
+      summary: Update a property
+      operationId: update_1
+      parameters:
+        - name: id
+          in: path
+          description: id of a propertie to be fetched from the database
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Imovel'
+        required: true
+      responses:
+        '200':
+          description: Updated property
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+        '400':
+          description: Incorrect request syntax
+        '500':
+          description: An exception was generated
+      security:
+        - oauth: []
+    delete:
+      tags:
+        - Imovel
+      summary: Delete a property
+      operationId: delete_1
+      parameters:
+        - name: id
+          in: path
+          description: id of a propertie to be fetched from the database
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Property deleted
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+        '500':
+          description: An exception was generated
+      security:
+        - oauth: []
+  /api/usuarios:
+    get:
+      tags:
+        - Usuario
+      summary: Get all Users
+      operationId: findall
+      responses:
+        '200':
+          description: Found the users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+        '401':
+          description: unauthorized user
+      security:
+        - oauth: []
+    post:
+      tags:
+        - Usuario
+      summary: Save one user
+      operationId: save
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+        required: true
+      responses:
+        '200':
+          description: Added a new user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+        '500':
+          description: An exception was generated
+      security:
+        - oauth: []
+  /api/usuarios/{id}/imoveis:
+    get:
+      tags:
+        - Imovel
+      summary: 'Find all properties of a user '
+      operationId: findallofuser
+      parameters:
+        - name: id
+          in: path
+          description: id of a user to be fetched from the database
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Find all user properties
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+      security:
+        - oauth: []
+    post:
+      tags:
+        - Imovel
+      summary: Save the property
+      operationId: save_1
+      parameters:
+        - name: id
+          in: path
+          description: id of a user to be fetched from the database
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Imovel'
+        required: true
+      responses:
+        '200':
+          description: User-added property
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+        '400':
+          description: Incorrect request syntax
+        '500':
+          description: An exception was generated
+      security:
+        - oauth: []
+  /api/imoveis/{id}/imagens:
+    post:
+      tags:
+        - Imagens
+      summary: 'Upload an image '
+      operationId: uploadImage
+      parameters:
+        - name: id
+          in: path
+          description: image id
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: files
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: Image upload done
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+      security:
+        - oauth: []
+  /api/usuarios/search:
+    get:
+      tags:
+        - Usuario
+      summary: Get one User by email
+      operationId: findByName
+      parameters:
+        - name: nome
+          in: query
+          description: email of a user to be fetched from the database
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Found the user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+        '404':
+          description: Not Found this user
+      security:
+        - oauth: []
+  /api/imoveis:
+    get:
+      tags:
+        - Imovel
+      summary: Find all properties
+      operationId: findall_1
+      responses:
+        '200':
+          description: Found all the properties
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+        '401':
+          description: No authorization
+      security:
+        - oauth: []
+  /api/imoveis/prontos:
+    get:
+      tags:
+        - Imovel
+      summary: checks if the property upload is ready
+      operationId: findalldone
+      responses:
+        '200':
+          description: Property upload process is ready
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+      security:
+        - oauth: []
+  /api/imagem/{id}:
+    get:
+      tags:
+        - Imagens
+      summary: 'find an image '
+      operationId: getImage
+      parameters:
+        - name: id
+          in: path
+          description: image id
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Found an image with the given id
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+      security:
+        - oauth: []
+  /api/imagem/info/{id}:
+    get:
+      tags:
+        - Imagens
+      summary: 'find an image '
+      operationId: getImageInfo
+      parameters:
+        - name: id
+          in: path
+          description: image id
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Returned data from an image
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+      security:
+        - oauth: []
+  /api/imagens/{id}:
+    delete:
+      tags:
+        - Imagens
+      summary: 'Delete an image '
+      operationId: deleteImage
+      parameters:
+        - name: id
+          in: path
+          description: image id
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Image Deleted
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HttpPost'
+      security:
+        - oauth: []
+components:
+  schemas:
+    GrantedAuthority:
+      type: object
+      properties:
+        authority:
+          type: string
+    Imagem:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        nome:
+          type: string
+        tipo:
+          type: string
+    Imovel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        titulo:
+          type: string
+        endereco:
+          type: string
+        metros_quadrados_de_terreno:
+          type: number
+          format: double
+        quantidade_de_quartos:
+          type: integer
+          format: int32
+        quantidade_de_banheiros:
+          type: integer
+          format: int32
+        quantidade_de_vagas_de_garagem:
+          type: integer
+          format: int32
+        preco:
+          type: number
+          format: double
+        status:
+          type: string
+        imagens:
+          type: array
+          items:
+            $ref: '#/components/schemas/Imagem'
+    Usuario:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        nome:
+          type: string
+        email:
+          type: string
+        senha:
+          type: string
+        cpf:
+          type: string
+        telefone:
+          type: string
+        endereco:
+          type: string
+        imoveis:
+          type: array
+          items:
+            $ref: '#/components/schemas/Imovel'
+        authorities:
+          type: array
+          items:
+            $ref: '#/components/schemas/GrantedAuthority'
+        accountNonLocked:
+          type: boolean
+        accountNonExpired:
+          type: boolean
+        credentialsNonExpired:
+          type: boolean
+        enabled:
+          type: boolean
+    Cancellable:
+      type: object
+    ClientConnectionRequest:
+      type: object
+      deprecated: true
+    ConnectionReleaseTrigger:
+      type: object
+      deprecated: true
+    Header:
+      type: object
+      properties:
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/HeaderElement'
+        name:
+          type: string
+        value:
+          type: string
+    HeaderElement:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        parameterCount:
+          type: integer
+          format: int32
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/NameValuePair'
+    HttpEntity:
+      type: object
+      properties:
+        chunked:
+          type: boolean
+        repeatable:
+          type: boolean
+        streaming:
+          type: boolean
+        content:
+          type: object
+        contentLength:
+          type: integer
+          format: int64
+        contentType:
+          $ref: '#/components/schemas/Header'
+        contentEncoding:
+          $ref: '#/components/schemas/Header'
+    HttpHost:
+      type: object
+      properties:
+        port:
+          type: integer
+          format: int32
+        schemeName:
+          type: string
+        address:
+          type: object
+          properties:
+            canonicalHostName:
+              type: string
+            multicastAddress:
+              type: boolean
+            anyLocalAddress:
+              type: boolean
+            loopbackAddress:
+              type: boolean
+            siteLocalAddress:
+              type: boolean
+            mcglobal:
+              type: boolean
+            mcnodeLocal:
+              type: boolean
+            mclinkLocal:
+              type: boolean
+            mcsiteLocal:
+              type: boolean
+            mcorgLocal:
+              type: boolean
+            hostAddress:
+              type: string
+            address:
+              type: array
+              items:
+                type: string
+                format: byte
+            hostName:
+              type: string
+            linkLocalAddress:
+              type: boolean
+        hostName:
+          type: string
+    HttpParams:
+      type: object
+      deprecated: true
+    HttpPost:
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/HttpParams'
+        uri:
+          type: string
+          format: uri
+        config:
+          $ref: '#/components/schemas/RequestConfig'
+        entity:
+          $ref: '#/components/schemas/HttpEntity'
+        method:
+          type: string
+        requestLine:
+          $ref: '#/components/schemas/RequestLine'
+        protocolVersion:
+          $ref: '#/components/schemas/ProtocolVersion'
+        header:
+          $ref: '#/components/schemas/Header'
+        headers:
+          type: array
+          writeOnly: true
+          items:
+            $ref: '#/components/schemas/Header'
+        allHeaders:
+          type: array
+          items:
+            $ref: '#/components/schemas/Header'
+        aborted:
+          type: boolean
+        connectionRequest:
+          $ref: '#/components/schemas/ClientConnectionRequest'
+        releaseTrigger:
+          $ref: '#/components/schemas/ConnectionReleaseTrigger'
+        cancellable:
+          $ref: '#/components/schemas/Cancellable'
+    NameValuePair:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    ProtocolVersion:
+      type: object
+      properties:
+        protocol:
+          type: string
+        major:
+          type: integer
+          format: int32
+        minor:
+          type: integer
+          format: int32
+    RequestConfig:
+      type: object
+      properties:
+        expectContinueEnabled:
+          type: boolean
+        proxy:
+          $ref: '#/components/schemas/HttpHost'
+        localAddress:
+          type: object
+          properties:
+            canonicalHostName:
+              type: string
+            multicastAddress:
+              type: boolean
+            anyLocalAddress:
+              type: boolean
+            loopbackAddress:
+              type: boolean
+            siteLocalAddress:
+              type: boolean
+            mcglobal:
+              type: boolean
+            mcnodeLocal:
+              type: boolean
+            mclinkLocal:
+              type: boolean
+            mcsiteLocal:
+              type: boolean
+            mcorgLocal:
+              type: boolean
+            hostAddress:
+              type: string
+            address:
+              type: array
+              items:
+                type: string
+                format: byte
+            hostName:
+              type: string
+            linkLocalAddress:
+              type: boolean
+        staleConnectionCheckEnabled:
+          type: boolean
+          deprecated: true
+        cookieSpec:
+          type: string
+        redirectsEnabled:
+          type: boolean
+        relativeRedirectsAllowed:
+          type: boolean
+        circularRedirectsAllowed:
+          type: boolean
+        maxRedirects:
+          type: integer
+          format: int32
+        authenticationEnabled:
+          type: boolean
+        targetPreferredAuthSchemes:
+          type: array
+          items:
+            type: string
+        proxyPreferredAuthSchemes:
+          type: array
+          items:
+            type: string
+        connectionRequestTimeout:
+          type: integer
+          format: int32
+        connectTimeout:
+          type: integer
+          format: int32
+        socketTimeout:
+          type: integer
+          format: int32
+        contentCompressionEnabled:
+          type: boolean
+        normalizeUri:
+          type: boolean
+        decompressionEnabled:
+          type: boolean
+          deprecated: true
+    RequestLine:
+      type: object
+      properties:
+        protocolVersion:
+          $ref: '#/components/schemas/ProtocolVersion'
+        uri:
+          type: string
+        method:
+          type: string
+  securitySchemes:
+    oauth:
+      type: http
+      scheme: bearer

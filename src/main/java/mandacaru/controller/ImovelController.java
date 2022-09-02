@@ -76,6 +76,10 @@ public class ImovelController {
 		}
     }
     
+    @ApiResponse(responseCode = "200", description = "Property upload process is ready",
+    	    content = {@Content(mediaType = "application/json", array =
+    	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
+    @Operation(summary ="checks if the property upload is ready")
     @GetMapping(path = "/imoveis/prontos")
     public ResponseEntity<List<Imovel>> findalldone() {
         return new ResponseEntity<List<Imovel>>(service.findAllDone(), HttpStatus.OK);

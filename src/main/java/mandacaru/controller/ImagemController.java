@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -42,7 +43,7 @@ public class ImagemController {
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
     @Operation(summary = "find an image ")
 	@GetMapping("/imagem/info/{id}") 
-	public Imagem getImageInfo(@PathVariable("id") int id) {
+	public Imagem getImageInfo(@Parameter(description = "image id") @PathVariable("id") int id) {
 		
         return service.find(id);
         
@@ -53,7 +54,7 @@ public class ImagemController {
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
     @Operation(summary = "find an image ")
 	@GetMapping("/imagem/{id}")
-    public ResponseEntity<byte[]> getImage(@PathVariable("id") int id){
+    public ResponseEntity<byte[]> getImage(@Parameter(description = "image id") @PathVariable("id") int id){
 
         Imagem img = service.find(id);
 
@@ -70,7 +71,7 @@ public class ImagemController {
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
     @Operation(summary = "Upload an image ")
 	@PostMapping("/imoveis/{id}/imagens") 
-	public void uploadImage(@PathVariable("id") int id,@RequestParam("files") MultipartFile[] files) throws IOException {
+	public void uploadImage(@Parameter(description = "image id") @PathVariable("id") int id,@RequestParam("files") MultipartFile[] files) throws IOException {
 		
 	    Arrays.asList(files).stream().forEach(file -> {
 	    	Imagem teste = new Imagem();
@@ -94,7 +95,7 @@ public class ImagemController {
     	    @ArraySchema(schema = @Schema(implementation = HttpPost.class)))})
     @Operation(summary = "Delete an image ")
 	@DeleteMapping("/imagens/{id}")
-	public void deleteImage(@PathVariable("id") int id) {
+	public void deleteImage(@Parameter(description = "image id") @PathVariable("id") int id) {
 		service.delete(id);
 	}
 	
