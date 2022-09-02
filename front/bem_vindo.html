@@ -24,13 +24,13 @@
         
        	<div style="display: inline-block; margin: 5px;">
 
-          <button class="mybutton" onclick="location.href='listar_anuncios.html';">Ver anuncios de imoveis</button> <br /><br />
+          <button class="mybutton" onclick="location.href='listar_anuncios.html';">Ver anuncios de imoveis</button>
 
         </div>
 
         <div style="display: inline-block; margin: 5px;">
 
-          <button class="mybutton" onclick="location.href='cadastrar_imovel.html';">Cadastrar Imóvel</button> <br /><br />
+          <button class="mybutton" onclick="location.href='cadastrar_imovel.html';">Cadastrar Imóvel</button>
 
         </div>
 
@@ -59,7 +59,7 @@
               <td>{{ imovel.quantidade_de_vagas_de_garagem }}</td>
               <td>{{ imovel.preco }}</td>
               <td>{{ imovel.status }}</td>
-              <td><img v-for="imagem in imovel.imagens" :src="img(imagem.id)" width="100" height="100"/></td>
+              <td><img v-for="imagem in imovel.imagens" :src="img(imagem.id)" class="figure"/></td>
             </tr>
           </tbody>
         </table>

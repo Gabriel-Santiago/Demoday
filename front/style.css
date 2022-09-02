@@ -119,6 +119,12 @@ body {
     border-bottom: 1px solid #dddddd;
   }
   
+  .content-table tbody tr:hover td{
+    background: #6BBDCD;
+	cursor: pointer;    
+	transition: 0.8s;
+  }
+  
   .content-table tbody tr:nth-of-type(even) {
     background-color: #e6e6e6;
   }
@@ -130,21 +136,26 @@ body {
   .content-table tbody tr:last-of-type {
     border-bottom: 2px solid #a3ecfa;
   }
-  
-  .content-table tbody tr.active-row {
-    font-weight: bold;
-    color: #a3ecfa;
-  }
 
   .mybutton{
-    border-color: #09AD76; 
-    color: #FFFFFF;
-    width: 126px; 
-    height: 36px; 
-    margin-top: 18px;
-    background: #09AD76;
-    color: #FFFFFF;
-    cursor: pointer;
+  font-family: lato,sans-serif;
+  font-weight: bold;
+  font-size: 1em;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  color: white;
+  display: inline-block;
+  padding: 10px 40px 10px 40px;
+  position: relative;
+  border: 3px ;
+  border-radius: 20px;
+  cursor: pointer;
+  background: #09AD76;
+  }
+  
+  .mybutton:hover{
+   transition: 0.8s;
+   background-color: #088b60;
   }
 
   .mytext{
@@ -155,10 +166,23 @@ body {
     font-weight: bold;
   }
 
-  figure img:hover, .inicio img:hover, nav ul li:hover, #card-pet:hover{
+  .figure{
+	width:100px;
+	max-height:100px;
+  }
+
+  .figure:hover{
     -moz-transform: scale(1.1);
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
     cursor: pointer;
-}
+  }
   
+ .cadastro {
+ text-align:center;
+ align-items :center;
+ margin-top:-27px;
+ width: 80%;
+ background: #ffffff;
+ 
+ }
