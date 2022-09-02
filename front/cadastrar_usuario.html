@@ -10,43 +10,37 @@
     <title>Cadastro de usuário</title>
     <script src="https://unpkg.com/vue@2.7.7/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
 
 </head>
  
-<body style="background-color: papayawhip;">
- 
-    <div id="usuario">
+<body>
 
-        <h1 style="text-align:center; padding-top: 54px; font-size: 54px; color: gray; font-weight: bold;">Cadastro</h1>
 
-        <div style="text-align:center; margin-top:-27px;"> 
+    <div class="login-page">
+        <div  class="form">
+            <form class="login-form" id="usuario">
 
-            <div style="display: inline-block; margin: 5px;">
+                    <h1>Cadastro</h1>
 
-                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px;">Nome:</p><input type="text" name="" id="" v-model="nome" placeholder="Fiódor Austen" /><br /><br />
+                    <input type="text" v-model="nome" placeholder="Nome" />
+    
+                    <input type="text" v-model="endereco" placeholder="Edereço" />     
+    
+                    <input type="email" v-model="email" placeholder="E-mail" />
+    
+                    <input type="text" v-model="cpf" placeholder="Cpf" maxlength="11"/>
+    
+                    <input type="text" v-model="telefone" placeholder="Telefone" />
+    
+                    <input type="password" v-model="senha" placeholder="Senha" />
+    
+                    <button  type="button" @click="postUsuario">Cadastrar</button>
 
-                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Endereço:</p><input type="text" name="" id="" v-model="endereco" placeholder="Rua, Av..." /><br /><br />      
-
-                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Email:</p><input type="text" name="" id="" v-model="email" placeholder="algumacoisa@hotmail.com" /><br /><br />
-
-                <button style="background-color: darkgray; border-color: darkgray; width: 99px; height: 27px; margin-top: 18px;"><a href="login.html" style="text-decoration:none; color:white;">Voltar</a></button> <br /><br />
-
-            </div>
-
-            <div style="display: inline-block; margin: 5px;">
-
-                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px;">CPF:</p><input type="text" name="" id="" v-model="cpf" placeholder="xxx.xxx.xxx-xx"/><br  /><br />
-
-                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Telefone:</p><input type="text" name="" id="" v-model="telefone" placeholder="(99) 9 9999-9999" /><br /><br />
-
-                <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px; margin-top: 3px;">Senha:</p><input type="password" name="" id="" v-model="senha" placeholder="1234" /><br /><br />
-
-                <button style="background-color: green; border-color: green; width: 99px; height: 27px; margin-top: 18px;" @click="postUsuario"><a style="text-decoration:none; color:white;">Salvar</a></button><br /><br />
-
-            </div>
-
+                    <p class="message">Já é registrado? <a href="login.html">faça login</a></p>
+            
+            </form>
         </div>
-
     </div>
  
     <script>

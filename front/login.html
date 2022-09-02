@@ -6,31 +6,33 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cliente</title>
+    <title>Login</title>
     <script src="https://unpkg.com/vue@2.7.7/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+
 
 </head>
 
-<body style="background-color: papayawhip;">
+<body>
 
-    <div id="app">
+    <div class="login-page">
+        <div  class="form">
+            <form class="login-form" id="app">
 
-        <h1 style="text-align:center; padding-top: 54px; font-size: 54px; color: gray; font-weight: bold;">Login</h1>
+                <h1 >Login</h1>
 
-        <div style="text-align:center;">
+                <input type="text" v-model="email" placeholder="email" style="width: 198px" />
+                <input type="password" v-model="password" placeholder="senha" style="width: 198px" />
 
-            <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px;">Email:</p><input type="text" name="" id="" v-model="email" placeholder="algumacoisa@hotmail.com" style="width: 198px" /><br /><br />
+                <button type="button" @click="login" >Logar</button>
 
-            <p style="font-size: 18px; color: gray; font-weight: bold; margin-bottom: 6px;">Senha:</p><input type="password" name="" id="" v-model="password" placeholder="1234" style="width: 198px" /><br /><br />
-
-            <button @click="login" style="background-color: skyblue; border-color: skyblue; width: 99px; height: 27px;"><a style="text-decoration:none; color:white;">Logar</a></button>
-
-            <button style="background-color: green; border-color: green; width: 99px; height: 27px;"><a href="cadastrar_usuario.html" style="text-decoration:none; color:white;">Cadastrar-se</a></button> <br /><br />
-
+                <p class="message">não é registrado? <a href="cadastrar_usuario.html">crie uma conta</a></p>
+            
+            </form>
         </div>
-        
     </div>
+        
 
     <script>
         var app = new Vue({
@@ -45,6 +47,7 @@
                     formData.append('username', this.email);
                     formData.append('password', this.password);
                     formData.append('grant_type', "password");
+                    console.log("teste")
 
                     axios.post("http://localhost:8080/oauth/token", formData, { auth: { username: 'mandacaru', password: 'senha123' } }).then((result) => {
 
