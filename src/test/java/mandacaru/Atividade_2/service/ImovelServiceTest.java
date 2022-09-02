@@ -75,8 +75,6 @@ public class ImovelServiceTest {
 		start();
 	}
 	
-	
-	
 	@Test
 	public void whenFindAllThenReturnAnList() {
 		when(repository.findAll()).thenReturn(List.of(imovel));

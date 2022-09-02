@@ -34,9 +34,9 @@ public class Pdt {
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
     	
-    	HttpEntity<String> httpEntity = new HttpEntity<>("username=integracao.ufc@pd.tec.br&password=3GS!3qyrhj&client_id=assinador-app&client_secret=&grant_type=password&",headers);
+    	HttpEntity<String> httpEntity = new HttpEntity<>("username=integracao.ufc@pd.tec.br&password=s9GYMru3#6&client_id=assinador-app&client_secret=&grant_type=password&",headers);
     	
-    	String result = restTemplate.postForObject(uri, httpEntity, String.class);
+    	String result = restTemplate.postForObject(uri, httpEntity, String.class); 
 		
 		JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
 		 

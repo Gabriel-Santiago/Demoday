@@ -84,20 +84,20 @@ public class ImovelService {
 	}
 
 	public List<Imovel> findAllOfUser(int usuario_id) {
-//		Pdt pdt = new Pdt();
-//		String token = null;
-//		try {
-//			token = pdt.Token();
-//		} catch (ParseException e) {}
-//		
-//		List<Imovel> imoveis = imovelRepository.findByUsuarioId(usuario_id);
-//		
-//		for (Imovel imovel : imoveis) {
-//			try {
-//				status(imovel,pdt,token);
-//			} catch (ParseException e) {}
-//			
-//		}
+		Pdt pdt = new Pdt();
+		String token = null;
+		try {
+			token = pdt.Token();
+		} catch (ParseException e) {}
+		
+		List<Imovel> imoveis = imovelRepository.findByUsuarioId(usuario_id);
+		
+		for (Imovel imovel : imoveis) {
+			try {
+				status(imovel,pdt,token);
+			} catch (ParseException e) {}
+			
+		}
 		return imovelRepository.findByUsuarioId(usuario_id);
 	}
 	

@@ -8,9 +8,11 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tomcat.util.json.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -178,6 +180,15 @@ public class ImovelControllerTest {
 		assertEquals(PROCESSO, response.getBody().get(0).getProcesso());
 		assertEquals(listImagem, response.getBody().get(0).getImagens());
 		assertEquals(usuario, response.getBody().get(0).getUsuario());
+	}
+
+	@Test
+	public void whenUpdateThenReturnSuccess() throws ParseException, IOException {
+		doNothing().when(service).update(ID, imovel);;
+
+		controller.update(ID, imovel);
+
+		verify(service).update(ID, imovel);;
 	}
 	
 	@Test
