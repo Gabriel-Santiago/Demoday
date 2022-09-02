@@ -1,32 +1,6 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<style>
-table {
-  border-collapse: collapse;
-  background-color: azure;
-}
-
-th, td {
-  border: 1px solid black;
-  padding: 8px;
-  text-transform:capitalize;
-}
-
-thead {
-  background-color: #333;
-  color: white;
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-
-tbody tr:nth-child(odd) {
-  background-color: rgb(232, 255, 255);
-}
-
-tbody tr:nth-child(even) {
-  background-color: rgb(208, 250, 250);
-}
-</style>
  
 <head>
 
@@ -36,32 +10,20 @@ tbody tr:nth-child(even) {
     <title>Imóveis</title>
     <script src="https://unpkg.com/vue@2.7.7/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <link rel="stylesheet" href="./style.css">
+
 
 </head>
  
-<body style="background-color: papayawhip;">
+<body>
  
     <div id="listaTodosImoveis">
 
-        <h1 style="text-align:center; padding-top: 54px; font-size: 54px; color: gray; font-weight: bold;">Todos Imóveis</h1>
+        <h1 class="mytext">Anúncios</h1>
 
         <div style="text-align:center; margin-top:-27px;"> 
 
-            <div style="display: inline-block; margin: 5px;">
-
-                <button @click="MostrarTodosImoveis" style="background-color: green; border-color: green; width: 126px; height: 36px; margin-top: 18px;"><a style="text-decoration:none; color:white;">Listar</a></button> <br /><br />
-
-            </div>
-
-            <div style="display: inline-block; margin: 5px;">
-
-                <button style="background-color: green; border-color: green; width: 126px; height: 36px; margin-top: 18px;"><a href="bem_vindo.html" style="text-decoration:none; color:white;">Voltar</a></button> <br /><br />
-
-            </div>
-            
-            <h1>Imóveis</h1>
-
-            <table class="table table-striped table-bordered" style="display: inline-block;">
+            <table class="content-table" style="display: inline-block;">
                 <thead>
                     <tr>
                         <th>Título</th>
@@ -83,10 +45,13 @@ tbody tr:nth-child(even) {
                         <td>{{ imovel.quantidade_de_banheiros }}</td>
                         <td>{{ imovel.quantidade_de_vagas_de_garagem }}</td>
                         <td>{{ imovel.preco }}</td> 
-                        <td><img v-for="imagem in imovel.imagens" :src="img(imagem.id)" width="100" height="100"/></td>
+                        <td><img v-for="imagem in imovel.imagens" :src="img(imagem.id)" width="100"/></td>
                     </tr>
                 </tbody>
             </table>
+            <div>
+                <button class="mybutton" onclick="location.href='bem_vindo.html';">Voltar</button>
+            </div>
         </div>        
     </div>
  
