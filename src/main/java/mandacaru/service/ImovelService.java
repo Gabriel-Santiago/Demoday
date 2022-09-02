@@ -34,9 +34,7 @@ public class ImovelService {
     	Usuario usuario = usuarioRepository.findById(usuario_id).get();
     	
     	entity.setUsuario(usuario);    	
-
     	pdt.UpDocument(token, processId, documentId,new PdfGenerator().criarPdf(entity));
-    	
     	while(!pdt.CheckDocument(token, processId, documentId).equals("DONE")) {
     		try {
     		    Thread.sleep(1000);
@@ -44,7 +42,6 @@ public class ImovelService {
     		    Thread.currentThread().interrupt();
     		}
     	}
-    	
     	pdt.patch(token, processId);
     	
 		entity.setProcesso(processId);
@@ -88,15 +85,17 @@ public class ImovelService {
 		try {
 			token = pdt.Token();
 		} catch (ParseException e) {}
-		
 		List<Imovel> imoveis = imovelRepository.findByUsuarioId(usuario_id);
-		
 		for (Imovel imovel : imoveis) {
-			try {
-				status(imovel,pdt,token);
-			} catch (ParseException e) {}
+			if (!imovel.getStatus().equals("Pronto")) {
+				try {
+					status(imovel,pdt,token);
+					
+				} catch (ParseException e) {}
+			}
 			
 		}
+		System.out.println("3");
 		return imovelRepository.findByUsuarioId(usuario_id);
 	}
 	
